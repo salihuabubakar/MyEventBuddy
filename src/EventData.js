@@ -1,0 +1,37 @@
+export const events = [
+  {
+    id: 1,
+    title: "Testing 1",
+    Staff: "Abdul",
+    description: "Tester 1 ",
+    start: "September 21, 2022 08:00:00",
+    end: "September 21, 2022 13:00:00",
+  },
+  {
+    id: 2,
+    title: "Testing 2",
+    Staff: "Isah",
+    description: "Tester 2",
+    start: "September 22, 2022 08:00:00",
+    end: "September 22, 2022 13:00:00",
+  },
+  {
+    id: 3,
+    title: "Testing 3",
+    Staff: "Musa",
+    description: "Tester 3",
+    start: "September 21, 2022 13:00:00",
+    end: "September 21, 2022 17:00:00",
+    blocked: true,
+    allDay: true,
+  },
+  {
+    id: 4,
+    title: "Testing 4",
+    Staff: "Salihu",
+    description: "Tester 4",
+    start: "September 23, 2022 10:00:00",
+    end: "September 23, 2022 16:00:00",
+    completed: true,
+  },
+];
