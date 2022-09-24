@@ -5,6 +5,8 @@ import Calendar from "./Components/calendar/calendar";
 import { events as eventData } from "./EventData";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import EventModal from "./Components/EventModal";
+import { EmptySpace } from "./Components/header/header.style";
+import {useGlobalState, setGlobalState} from "./context/GlobalState";
 import {
   Event, 
   accessors, 
@@ -23,9 +25,10 @@ const App = () => {
 
   let selectTimeout;
 
-  const [showEventModal, setShowEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
   const [daySelected, setDaySelected] = useState();
+
+  const [showEventModal] = useGlobalState("showEventModal");
 
   const [dayEvents, setDayEvents] = useState([]);
 
@@ -70,7 +73,7 @@ const App = () => {
   const onSelectSlot = ({ start, end, action }) => {
     console.log("PopUp EVents Trigger");
     setDaySelected(start);
-    setShowEventModal(true);
+    setGlobalState("showEventModal", true)
     console.log("onSelectSlot: ", { start, end, action });
     console.log(start);
   };
@@ -80,8 +83,6 @@ const App = () => {
   let strDateTime = daySelected;
   let myDate = new Date(strDateTime);
   console.log("converted date", myDate.toUTCString());
-
-  console.log("After", showEventModal);
 
   const onSelectEvent = (event) => {
     selectTimeout && window.clearTimeout(selectTimeout);
@@ -137,12 +138,12 @@ const App = () => {
     <div className="App" style={{ height: "100vh" }}>
       {showEventModal && (
         <EventModal
-          setShowEventModal={setShowEventModal}
           dispatchCalEvent={dispatchCalEvent}
           daySelected={daySelected}
           selectedEvent={selectedEvent}
         />
       )}
+      <EmptySpace />
       <Calendar
         {...{
           events,
