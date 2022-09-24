@@ -6,8 +6,17 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Header as HeaderDiv, Controls, Span } from "./header.style";
+import OpenWithIcon from "@mui/icons-material/OpenWith";
+import {
+  Header as HeaderDiv,
+  Controls,
+  Span,
+  HeaderContainer,
+  InnerHeaderContainer,
+  Overlay,
+} from "./header.style";
 import * as dates from "date-arithmetic";
+import { setGlobalState } from '../../context/GlobalState';
 
 
 const Header = (toolbar) => {
@@ -15,6 +24,16 @@ const Header = (toolbar) => {
   const {onView, onNavigate, date} = toolbar;
 
     const [dayChange, setDayChange] = useState("");
+
+    const [show, setShow] = useState(false);
+
+    const toggleSidebar = async () => {
+      setShow(!show);
+    };
+
+    const addShift = () => {
+      setGlobalState("showEventModal", true);
+    }
 
     const handleDayChange = (event) => {
       const value = event.target.value;
@@ -91,6 +110,7 @@ const Header = (toolbar) => {
       } else {
         return (
           <span>
+            <Span>Agenda</Span>  
             <Span>{fullDate.format("YYYY")}</Span>
           </span>
         );
@@ -98,39 +118,64 @@ const Header = (toolbar) => {
     };
 
     return (
-      <HeaderDiv>
-        <div className='left'>
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <Select className="select" value={dayChange} onChange={handleDayChange} displayEmpty inputProps={{ "aria-label": "Without label" }}>
-              <MenuItem disabled value=""> Week </MenuItem>
-              <MenuItem value={"Day"}>Day</MenuItem>
-              <MenuItem value={"Week"}>Week</MenuItem>
-              <MenuItem value={"Month"}>Month</MenuItem>
-              <MenuItem value={"Agenda"}>Agenda</MenuItem>
-            </Select>
-          </FormControl>
+      <HeaderContainer>
+        <Button size="large" className="sidebar-button" onClick={toggleSidebar}>
+          Controls
+          <span  style={{marginLeft: "3px", marginTop: "3px"}}>
+            <OpenWithIcon />
+          </span>
+        </Button>
+        <InnerHeaderContainer>
+          <HeaderDiv className={show ? "show" : ""}>
+            <div className="left">
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <Select
+                  className="select"
+                  value={dayChange}
+                  onChange={handleDayChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem disabled value="">
+                    {" "}
+                    Week{" "}
+                  </MenuItem>
+                  <MenuItem value={"Day"}>Day</MenuItem>
+                  <MenuItem value={"Week"}>Week</MenuItem>
+                  <MenuItem value={"Month"}>Month</MenuItem>
+                  <MenuItem value={"Agenda"}>Agenda</MenuItem>
+                </Select>
+              </FormControl>
 
-          <Controls>
-            <Button className="control-btn"  size="small" onClick={goToBack}>
-              <ArrowBackIosIcon style={{color: "gray", width: "20px"}}/>
-            </Button>
-            <label className={{}}>{label()}</label>
-            <Button className="control-btn"  size="small" onClick={goToNext}>
-              <ArrowForwardIosIcon style={{color: "gray", width: "30px"}} />
-            </Button>
-          </Controls>
+              <Controls>
+                <Button className="control-btn" size="small" onClick={goToBack}>
+                  <ArrowBackIosIcon style={{ color: "gray", width: "20px" }} />
+                </Button>
+                <label className={{}}>{label()}</label>
+                <Button className="control-btn" size="small" onClick={goToNext}>
+                  <ArrowForwardIosIcon
+                    style={{ color: "gray", width: "30px" }}
+                  />
+                </Button>
+              </Controls>
 
-          <Button className="btn"  size="large" onClick={goToCurrent}>
-            Today
-          </Button>
-        </div>
-        <div className='right'>
-          <Button className="btn shift-btn"  size="large" onClick={{}}>
-              Add Shift
-          </Button>
-        </div>
-
-      </HeaderDiv>
+              <Button
+                className="btn btn-today"
+                size="large"
+                onClick={goToCurrent}
+              >
+                Today
+              </Button>
+            </div>
+            <div className="right">
+              <Button className="btn shift-btn" size="large" onClick={addShift}>
+                Add Shift
+              </Button>
+            </div>
+          </HeaderDiv>
+          {show && <Overlay onClick={toggleSidebar} />}
+        </InnerHeaderContainer>
+      </HeaderContainer>
     );
   };
 

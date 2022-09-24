@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import GlobalContext from "../../context/GlobalContext";
+import GlobalContext from "../../context/GlobalState";
 import TextField from '@mui/material/TextField';
 import { 
   PopupContainer,
@@ -12,16 +12,18 @@ import TrashIcon from "../../img/trash.png";
 import AddeIcon from "../../img/add.png";
 import UpdateIcon from "../../img/update.png"
 
+import {setGlobalState} from "../../context/GlobalState";
 
-const EventModal = ({ setShowEventModal, daySelected, dispatchCalEvent }) => {
+
+const EventModal = ({
+  daySelected,
+  dispatchCalEvent,
+}) => {
   const options = [
     { value: 1, label: "Abdul" },
     { value: 2, label: "Musa" },
     { value: 3, label: "Isah" },
   ];
-
-  // const { daySelected, dispatchCalEvent, selectedEvent } =
-  //   useContext(GlobalContext);
 
   const handleStartTimeChange = (event) => {
     setStartTime(event.target.value);
@@ -55,7 +57,6 @@ const EventModal = ({ setShowEventModal, daySelected, dispatchCalEvent }) => {
   //   start: "September 22, 2022 08:00:00",
   //   end: "September 22, 2022 13:00:00",
   // },
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,7 +73,7 @@ const EventModal = ({ setShowEventModal, daySelected, dispatchCalEvent }) => {
       id: Date.now(),
     };
     dispatchCalEvent({ type: "push", payload: calendarEvent });
-    setShowEventModal(false);
+    setGlobalState("showEventModal", false);
   };
 
   const handleDeleteEvent = () => {
@@ -84,7 +85,7 @@ const EventModal = ({ setShowEventModal, daySelected, dispatchCalEvent }) => {
   };
 
   const handleClosingModal = () => {
-    setShowEventModal(false);
+    setGlobalState("showEventModal", false);
   };
 
   return (
@@ -140,7 +141,7 @@ const EventModal = ({ setShowEventModal, daySelected, dispatchCalEvent }) => {
 
           <div>
             <TextField
-              style={{width: "32%"}}
+              style={{ width: "32%" }}
               className="filled filled-nth-child"
               value={daySelected}
               disabled
