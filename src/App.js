@@ -29,14 +29,6 @@ const App = () => {
 
   const [dayEvents, setDayEvents] = useState([]);
 
-  // const [events, setEvents] = useState(
-  //   eventData.map((event) => {
-  //     event.start = new Date(event.start);
-  //     event.end = new Date(event.end);
-  //     return event;
-  //   })
-  // );
-
   const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
     [],
@@ -56,15 +48,16 @@ const App = () => {
     }
   }, [showEventModal]);
 
-  // console.table(savedEvents);
+  const [events, setEvents] = useState();
 
-  const [events, setEvents] = useState(
+  useEffect(() => {
     savedEvents.map((event) => {
       event.start = new Date(event.start);
       event.end = new Date(event.end);
       return event;
-    })
-  );
+    });
+    setEvents(savedEvents);
+  }, [savedEvents])
 
   console.table(events);
 

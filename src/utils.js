@@ -88,7 +88,7 @@ export const Event = ({ event }) => {
         >
           {event.title}
         </span>
-        <span>{event.description + ":  " + event.staff}</span>
+        <span>{event.description + ":  " + event.staff.label}</span>
       </>
     </span>
   );

@@ -36,7 +36,7 @@ const EventModal = ({ setShowEventModal, daySelected, dispatchCalEvent }) => {
   };
 
   const handleStaffChange = (event) => {
-    setStaff(event.label);
+    setStaff(event);
   };
 
   const [title, setTitle] = useState();
