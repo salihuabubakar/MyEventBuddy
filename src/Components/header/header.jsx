@@ -109,8 +109,7 @@ const Header = (toolbar) => {
         );
       } else {
         return (
-          <span>
-            <Span>Agenda</Span>  
+          <span> 
             <Span>{fullDate.format("YYYY")}</Span>
           </span>
         );
