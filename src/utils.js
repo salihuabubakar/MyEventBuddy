@@ -1,3 +1,5 @@
+import { setGlobalState } from "./context/GlobalState"
+
 const dayColors = [
   "#c6cbda",
   "#fee1e8",
