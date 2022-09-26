@@ -6,27 +6,26 @@ import { events as eventData } from "./EventData";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import EventModal from "./Components/EventModal";
 import { EmptySpace } from "./Components/header/header.style";
-import {useGlobalState, setGlobalState} from "./context/GlobalState";
+import { useGlobalState, setGlobalState } from "./context/GlobalState";
 import {
-  Event, 
-  accessors, 
-  dayPropGetter, 
+  Event,
+  accessors,
+  dayPropGetter,
   eventPropGetter,
   onDragStart,
   onKeyPressEvent,
   onSelecting,
   initEvents,
-  savedEventsReducer
-} from "./utils"
-
+  savedEventsReducer,
+} from "./utils";
 
 const App = () => {
   const now = () => new Date();
 
   let selectTimeout;
 
-  const [selectedEvent, setSelectedEvent] = useState();
-  const [daySelected, setDaySelected] = useState();
+  const [selectedStartDate, setSelectedStartDate] = useState();
+  const [selectedEndDate, setSelectedEndDate] = useState();
 
   const [showEventModal] = useGlobalState("showEventModal");
 
@@ -47,7 +46,7 @@ const App = () => {
   }, [savedEvents]);
   useEffect(() => {
     if (!showEventModal) {
-      setSelectedEvent(null);
+      setGlobalState("selectedEvent", "")
     }
   }, [showEventModal]);
 
@@ -60,9 +59,8 @@ const App = () => {
       return event;
     });
     setEvents(savedEvents);
-  }, [savedEvents])
+  }, [savedEvents]);
 
-  console.table(events);
 
   const [date, setDate] = useState(now());
   const [view, setView] = useState("week");
@@ -72,26 +70,25 @@ const App = () => {
 
   const onSelectSlot = ({ start, end, action }) => {
     console.log("PopUp EVents Trigger");
-    setDaySelected(start);
-    setGlobalState("showEventModal", true)
+    setSelectedStartDate(start);
+    setSelectedEndDate(end)
+    setGlobalState("showEventModal", true);
     console.log("onSelectSlot: ", { start, end, action });
     console.log(start);
   };
 
-  console.log("DaySelected...", daySelected);
+  console.log("DaySelected...", selectedStartDate);
 
-  let strDateTime = daySelected;
-  let myDate = new Date(strDateTime);
-  console.log("converted date", myDate.toUTCString());
+  // let strDateTime = selectedStartDate;
+  // let myDate = new Date(strDateTime);
+  // console.log("converted date", myDate.toUTCString());
 
   const onSelectEvent = (event) => {
-    selectTimeout && window.clearTimeout(selectTimeout);
+
+    setGlobalState("selectedEvent", event);
+    setGlobalState("showEventModal", true);
 
     console.log("OnselectEvent: ", event);
-
-    selectTimeout = setTimeout(() => {
-      console.log("onSelectEvent: ", event);
-    }, 250);
   };
 
   const onDoubleClickEvent = (event) => {
@@ -139,8 +136,8 @@ const App = () => {
       {showEventModal && (
         <EventModal
           dispatchCalEvent={dispatchCalEvent}
-          daySelected={daySelected}
-          selectedEvent={selectedEvent}
+          selectedStartDate={selectedStartDate}
+          selectedEndDate={selectedEndDate}
         />
       )}
       <EmptySpace />

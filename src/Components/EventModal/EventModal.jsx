@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import GlobalContext from "../../context/GlobalState";
+import React, { useState } from "react";
 import TextField from '@mui/material/TextField';
 import { 
   PopupContainer,
@@ -12,18 +11,22 @@ import TrashIcon from "../../img/trash.png";
 import AddeIcon from "../../img/add.png";
 import UpdateIcon from "../../img/update.png"
 
-import {setGlobalState} from "../../context/GlobalState";
+import {setGlobalState, useGlobalState} from "../../context/GlobalState";
 
 
 const EventModal = ({
-  daySelected,
+  selectedStartDate,
   dispatchCalEvent,
+  selectedEndDate,
 }) => {
   const options = [
     { value: 1, label: "Abdul" },
     { value: 2, label: "Musa" },
     { value: 3, label: "Isah" },
   ];
+
+
+  const [selectedEvent] = useGlobalState("selectedEvent");
 
   const handleStartTimeChange = (event) => {
     setStartTime(event.target.value);
@@ -41,13 +44,28 @@ const EventModal = ({
     setStaff(event);
   };
 
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [staff, setStaff] = useState();
+  const [title, setTitle] = useState(
+    selectedEvent.title ? selectedEvent.title : ""
+  );
+  const [description, setDescription] = useState(
+    selectedEvent.description ? selectedEvent.description : ""
+  );
+  const [staff, setStaff] = useState(
+    selectedEvent.staff ? selectedEvent.staff : ""
+  );
 
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
-  const [checkToComplete, setCheckToComplete] = useState();
+  const [startTime, setStartTime] = useState(
+    selectedEvent.startTime ? selectedEvent.startTime : null
+  );
+  const [endTime, setEndTime] = useState(
+    selectedEvent.endTime ? selectedEvent.endTime : null
+  );
+  const [checkToComplete, setCheckToComplete] = useState(
+    selectedEvent.checkToComplete ? selectedEvent.checkToComplete : ""
+  );
+  const [id, setId] = useState(
+    selectedEvent.id ? selectedEvent.id : Date.now()
+  );
 
   // {
   //   id: 2,
@@ -58,6 +76,10 @@ const EventModal = ({
   //   end: "September 22, 2022 13:00:00",
   // },
 
+  console.table([selectedStartDate, selectedEndDate]);
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const calendarEvent = {
@@ -66,22 +88,27 @@ const EventModal = ({
       startTime,
       endTime,
       staff,
-      start: "September 24, 2022 08:00:00",
-      end: "September 24, 2022 10:00:00",
+      start: selectedStartDate,
+      end: selectedEndDate,
       checkToComplete,
-      day: daySelected,
-      id: Date.now(),
+      id,
     };
-    dispatchCalEvent({ type: "push", payload: calendarEvent });
+    if (selectedEvent.id) {
+      dispatchCalEvent({ type: "update", payload: calendarEvent });
+    } else {
+      dispatchCalEvent({ type: "push", payload: calendarEvent });
+    }
     setGlobalState("showEventModal", false);
   };
 
+  console.log("dateNow", id);
+
   const handleDeleteEvent = () => {
-    // dispatchCalEvent({
-    //   type: "delete",
-    //   payload: selectedEvent,
-    // });
-    // setShowEventModal(false);
+    dispatchCalEvent({
+      type: "delete",
+      payload: selectedEvent,
+    });
+    setGlobalState("showEventModal", false);
   };
 
   const handleClosingModal = () => {
@@ -93,11 +120,11 @@ const EventModal = ({
       <PopupContainer>
         <header>
           <div>
-            {/* {selectedEvent && (
+            {selectedEvent.id && (
               <span onClick={handleDeleteEvent}>
                 <img src={TrashIcon} alt="trashIcon" />
               </span>
-            )} */}
+            )}
             <span onClick={handleClosingModal}>
               <img src={CancleIcon} alt="cancelIcon" />
             </span>
@@ -127,14 +154,14 @@ const EventModal = ({
 
           <Select
             onChange={handleStaffChange}
-            // defaultValue={
-            //   selectedEvent
-            //     ? {
-            //         value: staff?.value,
-            //         label: staff?.label,
-            //       }
-            //     : "Select Staff"
-            // }
+            defaultValue={
+              selectedEvent.staff
+                ? {
+                    value: staff?.value,
+                    label: staff?.label,
+                  }
+                : "Select Staff"
+            }
             placeholder="Select Staff"
             options={options}
           />
@@ -143,7 +170,7 @@ const EventModal = ({
             <TextField
               style={{ width: "32%" }}
               className="filled filled-nth-child"
-              value={daySelected}
+              value={selectedStartDate}
               disabled
               variant="standard"
             />{" "}
@@ -170,7 +197,7 @@ const EventModal = ({
             </span>{" "}
             <br />
             <br />
-            {/* {selectedEvent ? (
+            {selectedEvent.checkToComplete ? (
               <span>
                 <input
                   onChange={handleCheckChange}
@@ -181,15 +208,15 @@ const EventModal = ({
                 />{" "}
                 Completed
               </span>
-            ) : null} */}
+            ) : null}
           </div>
         </div>
         <button type="submit" onClick={handleSubmit}>
-          {/* {selectedEvent ? (
+          {selectedEvent.id ? (
             <img src={UpdateIcon} alt="updateIcon" />
-          ) : ( */}
+          ) : (
           <img src={AddeIcon} alt="plusIcon" />
-          {/* )} */}
+          )}
         </button>
       </PopupContainer>
     </PopupWrapper>

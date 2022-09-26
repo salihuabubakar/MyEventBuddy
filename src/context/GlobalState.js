@@ -1,7 +1,8 @@
 import { createGlobalState } from "react-hooks-global-state";
 
 const {setGlobalState, useGlobalState } = createGlobalState({
-  showEventModal: false
+  showEventModal: false,
+  selectedEvent: [],
 });
 
 export {setGlobalState, useGlobalState}
