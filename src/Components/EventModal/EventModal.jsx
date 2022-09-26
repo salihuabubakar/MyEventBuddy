@@ -201,7 +201,7 @@ const EventModal = ({
               <span>
                 <input
                   onChange={handleCheckChange}
-                  checked={selectedEvent.checkToComplete ? checkToComplete : ""}
+                  checked={selectedEvent.id ? checkToComplete : ""}
                   type="checkbox"
                   name="check"
                   id=""
