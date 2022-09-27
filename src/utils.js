@@ -25,9 +25,9 @@ export const dayPropGetter = (date) => {
   } ${date.getFullYear()}`;
   if (allDate === currentDate)
     return {
-      // style: {
-      //   backgroundImage: "#E7E7E8",
-      // },
+      style: {
+        backgroundImage: "red",
+      },
     };
   return {
     style: {
@@ -39,9 +39,11 @@ export const dayPropGetter = (date) => {
   };
 };
 
-export const eventPropGetter = ({ event, start, end, isSelected }) => {
+export const eventPropGetter = (event) => {
+
+  const backgroundColor = event.hexCodeColor;
   let newStyle = {
-    backgroundColor: "#F5AC70",
+    backgroundColor: backgroundColor,
     color: "white",
     borderRadius: "5px;",
     border: "none",
@@ -51,12 +53,6 @@ export const eventPropGetter = ({ event, start, end, isSelected }) => {
     borderTopLeftRadius: "5px",
     borderBottomLeftRadius: "5px",
   };
-  if (event) {
-    // newStyle.backgroundColor = "lightgreen";
-    newStyle.backgroundColor = "#F5AC70";
-    newStyle.color = "white";
-    newStyle.fontWeight = "bold";
-  }
   return {
     className: "",
     style: newStyle,

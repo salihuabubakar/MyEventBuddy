@@ -13,6 +13,17 @@ import UpdateIcon from "../../img/update.png"
 
 import {setGlobalState, useGlobalState} from "../../context/GlobalState";
 
+const colors = [
+  "#251607",
+  "#4F9153",
+  "#FC8EAC",
+  "#F5AC70",
+  "#555555",
+  "#326872",
+  "#6F2DA8",
+  "#829F82"
+];
+
 
 const EventModal = ({
   selectedStartDate,
@@ -67,6 +78,10 @@ const EventModal = ({
     selectedEvent.id ? selectedEvent.id : Date.now()
   );
 
+  const [hexCodeColor, setHexCodeColor] = useState(
+    selectedEvent.hexCodeColor ? selectedEvent.hexCodeColor : ""
+  );
+
   // {
   //   id: 2,
   //   title: "Testing 2",
@@ -92,6 +107,7 @@ const EventModal = ({
       end: selectedEndDate,
       checkToComplete,
       id,
+      hexCodeColor,
     };
     if (selectedEvent.id) {
       dispatchCalEvent({ type: "update", payload: calendarEvent });
@@ -113,6 +129,12 @@ const EventModal = ({
 
   const handleClosingModal = () => {
     setGlobalState("showEventModal", false);
+  };
+
+  const handleHexCodeColorState = (e) => {
+    const hexCode = e.target.value;
+    console.log(hexCode);
+    setHexCodeColor(hexCode);
   };
 
   return (
@@ -209,13 +231,81 @@ const EventModal = ({
                 Completed
               </span>
             ) : null}
+            <div className="you">
+              <div>
+                <label class="c0">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[0]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+                <label class="c1">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[1]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+                <label class="c2">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[2]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+                <labe class="c3">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[3]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </labe>
+                <label class="c4">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[4]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+                <label class="c5">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[5]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+                <label class="c6">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[6]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+                <label class="c7">
+                  <input
+                    type="radio"
+                    name="hexCode"
+                    value={colors[7]}
+                    onChange={handleHexCodeColorState}
+                  />
+                </label>
+              </div>
+            </div>
           </div>
         </div>
         <button type="submit" onClick={handleSubmit}>
           {selectedEvent.id ? (
             <img src={UpdateIcon} alt="updateIcon" />
           ) : (
-          <img src={AddeIcon} alt="plusIcon" />
+            <img src={AddeIcon} alt="plusIcon" />
           )}
         </button>
       </PopupContainer>
