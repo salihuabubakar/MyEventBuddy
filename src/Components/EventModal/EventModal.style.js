@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import {media} from "../header/header.style"
+const {mobile} = media
 
 export const PopupContainer = styled.form`
   background-color: white;
@@ -7,6 +9,10 @@ export const PopupContainer = styled.form`
   position: absolute;
   display: flex;
   flex-direction: column;
+
+  ${mobile} {
+    width: 95%;
+  }
 
   box-shadow: 1px 3px 33px -7px rgba(0, 0, 0, 0.54);
   -webkit-box-shadow: 1px 3px 33px -7px rgba(0, 0, 0, 0.54);
