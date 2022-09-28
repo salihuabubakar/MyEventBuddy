@@ -47,40 +47,47 @@ const Header = (toolbar) => {
       } else if (value === "Month") {
           onView("month");
           onNavigate("month");
-      } else {
-          onView("agenda");
-          onNavigate("agenda");
+      } else if (value === "Agenda") {
+        onView("agenda");
+        onNavigate("agenda");
       }
     };
 
-
-    const testGround = () => {
-      let prev = moment().subtract(1, "days");
-      let add = moment().add(1, "days");
-      let day = moment(date);
-      return add?.format("ddd");
-    }
-
-    console.log('saihu', testGround());
-
     const goToBack = () => {
-      const prev = new Date().getDate - 1;
-      // date.setDay(moment().subtract(1, "days"));
-      dates.add(date, -1, "day");
-      // date.setMonth(date.getMonth().getDay() - 1);
-      onNavigate("prev");
+      let newDate;
+      if(dayChange === "Day") {
+        newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, 1)
+      }else if (dayChange === "Week") {
+        newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7, 1)
+      }else if(dayChange === "Month" || dayChange === "Agenda") {
+        newDate = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+      }
+      onNavigate("prev", newDate);
     };
 
     const goToNext = () => {
-      date.setMonth(date.getMonth() + 1);
-      onNavigate("next");
+      let newDate;
+      if(dayChange === "Day") {
+        newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, 1)
+      }else if (dayChange === "Week") {
+        newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7, 1)
+      }
+      else if(dayChange === "Month" || dayChange === "Agenda") {
+        newDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+      }
+      onNavigate("next", newDate);
     };
 
     const goToCurrent = () => {
       const now = new Date();
-      date.setMonth(now.getMonth());
-      date.setYear(now.getFullYear());
-      onNavigate("current");
+      if(dayChange === "Day") {
+        now.getDay();
+      }else {
+        date.setMonth(now.getMonth());
+        date.setYear(now.getFullYear());
+      }
+
+      onNavigate("current", now);
     };
 
     const label = () => {
@@ -94,10 +101,18 @@ const Header = (toolbar) => {
           </span>
         );
       } else if (dayChange === "Week") {
+        let startOfTheWeek = new Date(fullDate.startOf("week")._d).toDateString();
+        startOfTheWeek = startOfTheWeek.split(" ").slice(2, 3).join(" ");
+
+        let endOfTheWeek = new Date(fullDate.endOf("week")._d).toDateString();
+        endOfTheWeek = endOfTheWeek.split(" ").slice(2, 3).join(" ");
+
         return (
           <span>
             <Span> {fullDate.format("MMM")}</Span>
-            <Span><span>{fullDate.format("DD")}</span> - <span>{fullDate.format("DD")}</span></Span>
+            <Span>
+              <span>{startOfTheWeek}</span> - <span>{endOfTheWeek}</span>
+            </Span>
           </span>
         );
       } else if (dayChange === "Month") {
@@ -108,9 +123,17 @@ const Header = (toolbar) => {
           </span>
         );
       } else {
+        let startOfTheMonth = new Date(fullDate.startOf("month")._d).toDateString();
+        startOfTheMonth = startOfTheMonth.split(" ").slice(2, 3).join(" ");
+
+        let endOfTheMonth = new Date(fullDate.endOf("month")._d).toDateString();
+        endOfTheMonth = endOfTheMonth.split(" ").slice(2, 3).join(" ");
         return (
-          <span> 
-            <Span>{fullDate.format("YYYY")}</Span>
+          <span>
+            <Span>{fullDate.format("MMM")}</Span>
+            <Span>
+              <span>{startOfTheMonth}</span> - <span>{endOfTheMonth}</span>
+            </Span>
           </span>
         );
       }

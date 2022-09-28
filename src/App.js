@@ -63,7 +63,7 @@ const App = () => {
 
 
   const [date, setDate] = useState(now());
-  const [view, setView] = useState("week");
+  const [view, setView] = useState("month");
 
   const onNavigate = (newDate) => setDate(newDate);
   const onView = (newView) => setView(newView);
@@ -163,7 +163,7 @@ const App = () => {
         max={pm8}
         {...accessors}
         popup={true}
-        selectable="ignoreEvents"
+        selectable={true}
         components={{
           toolbar: Header,
           event: Event,
