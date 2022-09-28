@@ -63,7 +63,7 @@ const App = () => {
 
 
   const [date, setDate] = useState(now());
-  const [view, setView] = useState("month");
+  const [view, setView] = useState("week");
 
   const onNavigate = (newDate) => setDate(newDate);
   const onView = (newView) => setView(newView);
