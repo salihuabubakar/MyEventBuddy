@@ -1,22 +1,9 @@
-import { setGlobalState } from "./context/GlobalState"
-
-const dayColors = [
-  "#c6cbda",
-  "#fee1e8",
-  "#fed7c3",
-  "#f6eac2",
-  "#ecd5e3",
-  "#ffd8be",
-  "#eceae4",
-];
-
 export const accessors = {
   draggableAccessor: (event) => !event.blocked,
   resizableAccessor: (event) => !event.blocked,
 };
 
 export const dayPropGetter = (date) => {
-  //console.log('[dayPropGetter] ', date, ' day ', date.getDay());
   let currentDate = `${new Date().getDate()} ${
     new Date().getMonth() + 1
   } ${new Date().getFullYear()}`;
@@ -26,15 +13,16 @@ export const dayPropGetter = (date) => {
   if (allDate === currentDate)
     return {
       style: {
-        backgroundImage: "red",
+        borderRadius: "4px",
+        color: "#EA4335",
+        backgroundColor: "#fff",
       },
     };
   return {
     style: {
-      // backgroundColor: dayColors[date.getDay()],
       backgroundColor: "#fff",
       textAlign: "center",
-      border: "1px solid #E7E7E8",
+      // border: "0.5px solid #E7E7E8",
     },
   };
 };
@@ -69,7 +57,6 @@ export const onDragStart = ({ event, action }) => {
   if (id === 5) {
     return false;
   }
-  //console.log(`onDragStart: ${action}`, event);
 };
 
 export const onSelecting = (range) => {

@@ -131,8 +131,12 @@ const App = () => {
   let pm8 = today.set("hour", 21).set("minutes", 0).toDate();
   let am8 = today.set("hour", 8).set("minutes", 0).toDate();
 
+  const ErrorMessage = () => {
+    return  <h1>No Events in this ranges</h1>;
+  }
+
   return (
-    <div className="App" style={{ height: "100vh" }}>
+    <div className="App" style={{ height: "98vh" }}>
       {showEventModal && (
         <EventModal
           dispatchCalEvent={dispatchCalEvent}
@@ -167,6 +171,12 @@ const App = () => {
         components={{
           toolbar: Header,
           event: Event,
+        }}
+        messages={{
+          noEventsInRange: `oops! No Schedules Available`,
+          date: "Date Header",
+          time: "Time Header",
+          event: "Shift Header"
         }}
       />
     </div>

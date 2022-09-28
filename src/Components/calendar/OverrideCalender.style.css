@@ -2,11 +2,15 @@
 .rbc-date-cell {
   text-align: center;
   padding: 0.5%;
+  
+}
+
+.rbc-current {
+  color: #EA4335;
 }
 
 .rbc-today {
-  color: red;
-  background-color: #DDDDDD;
+  background-color: none;
   font-weight: 900;
 }
 
@@ -16,6 +20,14 @@
 
 .rbc-row-content {
   
+}
+
+.rbc-current-time-indicator {
+  background-color: #EA4335;
+}
+
+.rbc-current-time-indicator-shape {
+
 }
 
 .rbc-row {
