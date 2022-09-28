@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import TextField from '@mui/material/TextField';
-import { 
+import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import {
   PopupContainer,
-  PopupWrapper 
+  PopupWrapper,
+  PopCardContentWrapper,
+  TextWrapper,
+  SelectWrapper,
+  DateWrapper,
+  ColorWrapper,
 } from "./EventModal.style";
 
 import Select from 'react-select';
@@ -30,50 +39,40 @@ const EventModal = ({
   dispatchCalEvent,
   selectedEndDate,
 }) => {
+
+
   const options = [
     { value: 1, label: "Abdul" },
     { value: 2, label: "Musa" },
     { value: 3, label: "Isah" },
   ];
 
-
   const [selectedEvent] = useGlobalState("selectedEvent");
 
-  const handleStartTimeChange = (event) => {
-    setStartTime(event.target.value);
-  };
+  const [startTime, setStartTime] = useState(
+    selectedEvent.start ? selectedEvent.start : dayjs()
+  );
 
-  const handleEndTimeChange = (event) => {
-    setEndTime(event.target.value);
-  };
-
-  const handleCheckChange = (event) => {
-    setCheckToComplete(event.target.checked);
-  };
-
-  const handleStaffChange = (event) => {
-    setStaff(event);
-  };
+  const [endTime, setEndTime] = useState(
+    selectedEvent.end ? selectedEvent.end : dayjs()
+  );
 
   const [title, setTitle] = useState(
     selectedEvent.title ? selectedEvent.title : ""
   );
+
   const [description, setDescription] = useState(
     selectedEvent.description ? selectedEvent.description : ""
   );
+
   const [staff, setStaff] = useState(
     selectedEvent.staff ? selectedEvent.staff : ""
   );
 
-  const [startTime, setStartTime] = useState(
-    selectedEvent.startTime ? selectedEvent.startTime : null
-  );
-  const [endTime, setEndTime] = useState(
-    selectedEvent.endTime ? selectedEvent.endTime : null
-  );
   const [checkToComplete, setCheckToComplete] = useState(
     selectedEvent.checkToComplete ? selectedEvent.checkToComplete : ""
   );
+
   const [id, setId] = useState(
     selectedEvent.id ? selectedEvent.id : Date.now()
   );
@@ -82,29 +81,14 @@ const EventModal = ({
     selectedEvent.hexCodeColor ? selectedEvent.hexCodeColor : ""
   );
 
-  // {
-  //   id: 2,
-  //   title: "Testing 2",
-  //   Staff: "Isah",
-  //   description: "Tester 2",
-  //   start: "September 22, 2022 08:00:00",
-  //   end: "September 22, 2022 13:00:00",
-  // },
-
-  console.table([selectedStartDate, selectedEndDate]);
-
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const calendarEvent = {
       title,
       description,
-      startTime,
-      endTime,
       staff,
-      start: selectedStartDate,
-      end: selectedEndDate,
+      start: startTime,
+      end: endTime,
       checkToComplete,
       id,
       hexCodeColor,
@@ -116,8 +100,6 @@ const EventModal = ({
     }
     setGlobalState("showEventModal", false);
   };
-
-  console.log("dateNow", id);
 
   const handleDeleteEvent = () => {
     dispatchCalEvent({
@@ -131,10 +113,24 @@ const EventModal = ({
     setGlobalState("showEventModal", false);
   };
 
-  const handleHexCodeColorState = (e) => {
-    const hexCode = e.target.value;
-    console.log(hexCode);
-    setHexCodeColor(hexCode);
+  const handleStartTimeChange = (event) => {
+    setStartTime(event);
+  };
+
+  const handleEndTimeChange = (event) => {
+    setEndTime(event);
+  };
+
+  const handleStaffChange = (event) => {
+    setStaff(event);
+  };
+
+  const handleCheckChange = (event) => {
+    setCheckToComplete(event.target.checked);
+  };
+
+  const handleHexCodeColorState = (event) => {
+    setHexCodeColor(event.target.value);
   };
 
   return (
@@ -152,13 +148,13 @@ const EventModal = ({
             </span>
           </div>
         </header>
-        <div className="pop-card-content">
-          <div className="flex">
+        <PopCardContentWrapper>
+          <TextWrapper>
             <TextField
               className="filled first-child"
               autoComplete="off"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(event) => setTitle(event.target.value)}
               id="outlined-basic"
               label="Add title"
               variant="filled"
@@ -167,59 +163,56 @@ const EventModal = ({
               className="filled second-child"
               autoComplete="off"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(event) => setDescription(event.target.value)}
               id="outlined-basic"
               label="Add a description"
               variant="filled"
             />
-          </div>
+          </TextWrapper>
 
-          <Select
-            onChange={handleStaffChange}
-            defaultValue={
-              selectedEvent.staff
-                ? {
-                    value: staff?.value,
-                    label: staff?.label,
-                  }
-                : "Select Staff"
-            }
-            placeholder="Select Staff"
-            options={options}
-          />
+          <SelectWrapper>
+            <Select
+              onChange={handleStaffChange}
+              defaultValue={
+                selectedEvent.staff
+                  ? {
+                      value: staff?.value,
+                      label: staff?.label,
+                    }
+                  : "Select Staff"
+              }
+              placeholder="Select Staff"
+              options={options}
+            />
+          </SelectWrapper>
+
+          <DateWrapper>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div className="dateContainer">
+                <div className="start-time">
+                  <label>Start Time</label>
+                  <DateTimePicker
+                    className="start"
+                    value={startTime}
+                    onChange={handleStartTimeChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </div>
+                <div className="endTime">
+                  <label>End Time</label>
+                  <DateTimePicker
+                    className="end"
+                    value={endTime}
+                    onChange={handleEndTimeChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </div>
+              </div>
+            </LocalizationProvider>
+          </DateWrapper>
 
           <div>
-            <TextField
-              style={{ width: "32%" }}
-              className="filled filled-nth-child"
-              value={selectedStartDate}
-              disabled
-              variant="standard"
-            />{" "}
-            <br />
-            <span>
-              Start Time:{" "}
-              <input
-                value={startTime}
-                onChange={handleStartTimeChange}
-                type="time"
-                id="appt"
-                name="startTime"
-              />
-            </span>
-            <span>
-              End Time:{" "}
-              <input
-                value={endTime}
-                onChange={handleEndTimeChange}
-                type="time"
-                id="appt"
-                name="endTime"
-              />
-            </span>{" "}
-            <br />
-            <br />
-            {selectedEvent.id ? (
+            {/* {selectedEvent.id ? (
               <span>
                 <input
                   onChange={handleCheckChange}
@@ -230,77 +223,76 @@ const EventModal = ({
                 />{" "}
                 Completed
               </span>
-            ) : null}
-            <div className="you">
-              <div>
-                <label class="c0">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[0]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-                <label class="c1">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[1]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-                <label class="c2">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[2]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-                <labe class="c3">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[3]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </labe>
-                <label class="c4">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[4]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-                <label class="c5">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[5]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-                <label class="c6">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[6]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-                <label class="c7">
-                  <input
-                    type="radio"
-                    name="hexCode"
-                    value={colors[7]}
-                    onChange={handleHexCodeColorState}
-                  />
-                </label>
-              </div>
-            </div>
+            ) : null} */}
           </div>
-        </div>
+
+          <ColorWrapper>
+            <label class="c0">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[0]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+            <label class="c1">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[1]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+            <label class="c2">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[2]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+            <labe class="c3">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[3]}
+                onChange={handleHexCodeColorState}
+              />
+            </labe>
+            <label class="c4">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[4]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+            <label class="c5">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[5]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+            <label class="c6">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[6]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+            <label class="c7">
+              <input
+                type="radio"
+                name="hexCode"
+                value={colors[7]}
+                onChange={handleHexCodeColorState}
+              />
+            </label>
+          </ColorWrapper>
+        </PopCardContentWrapper>
         <button type="submit" onClick={handleSubmit}>
           {selectedEvent.id ? (
             <img src={UpdateIcon} alt="updateIcon" />
