@@ -162,10 +162,10 @@ const Header = (toolbar) => {
                     {" "}
                     Week{" "}
                   </MenuItem>
-                  <MenuItem value={"Day"}>Day</MenuItem>
-                  <MenuItem value={"Week"}>Week</MenuItem>
-                  <MenuItem value={"Month"}>Month</MenuItem>
-                  <MenuItem value={"Agenda"}>Schedule</MenuItem>
+                  <MenuItem value={"Day"}>DAY</MenuItem>
+                  <MenuItem value={"Week"}>WEEK</MenuItem>
+                  <MenuItem value={"Month"}>MONTH</MenuItem>
+                  <MenuItem value={"Agenda"}>SCHEDULE</MenuItem>
                 </Select>
               </FormControl>
 

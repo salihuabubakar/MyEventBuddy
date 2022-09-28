@@ -68,12 +68,12 @@ export const Event = ({ event }) => {
     <span>
       <>
         <span
-          style={{ color: "black", fontWeight: "bold", marginRight: "10px" }}
+          style={{ fontWeight: "bold", marginRight: "20px" }}
           key={event.id}
         >
           {event.title}
         </span>
-        <span>{event.description + ":  " + event.staff.label}</span>
+        <span style={{fontWeight: "lighter"}}>{event.staff.label}</span>
       </>
     </span>
   );
