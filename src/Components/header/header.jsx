@@ -6,7 +6,7 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import OpenWithIcon from "@mui/icons-material/OpenWith";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   Header as HeaderDiv,
   Controls,
@@ -120,8 +120,8 @@ const Header = (toolbar) => {
       <HeaderContainer>
         <Button size="large" className="sidebar-button" onClick={toggleSidebar}>
           Controls
-          <span  style={{marginLeft: "3px", marginTop: "3px"}}>
-            <OpenWithIcon />
+          <span style={{ marginLeft: "3px", marginTop: "3px" }}>
+            <ArrowDropDownIcon />
           </span>
         </Button>
         <InnerHeaderContainer>

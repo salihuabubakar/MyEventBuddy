@@ -41,29 +41,6 @@ export const PopupContainer = styled.form`
     }
   }
 
-  .pop-card-content {
-    padding: 1rem;
-
-    div {
-      /* width: 100%; */
-      .filled {
-        margin: 10px 0;
-      }
-      .filled-nth-child {
-        width: 60%;
-      }
-      .first-child {
-        margin-right: 1px;
-      }
-      .second-child {
-        margin-left: 1px;
-      }
-    }
-    .flex {
-      display: flex;
-    }
-  }
-
   button {
     cursor: pointer;
     padding: 1%;
@@ -73,16 +50,60 @@ export const PopupContainer = styled.form`
       width: 30px;
     }
   }
+`;
 
+export const PopCardContentWrapper = styled.div`
+  padding: 0.5rem;
+`;
+
+export const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  .filled {
+    margin: 10px 0;
+  }
+`;
+
+export const SelectWrapper = styled.div`
+  
+`;
+
+export const DateWrapper = styled.div`
+  margin-bottom: 10px;
+  margin-top: 20px;
+
+  .dateContainer {
+    display: flex;
+    flex-direction: column;
+
+    .start, .end {
+      width: 100%;
+    }
+
+    label {
+      display: block;
+      color: gray;
+    }
+  }
+  .start-time,
+  .end-time {
+    margin: 5px 0;
+  }
+
+  .start-time {
+    margin-bottom: 10px;
+  }
+
+  .end-time {
+  }
+`;
+
+export const ColorWrapper = styled.div`
+  cursor: default;
   .c0 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #251607;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -91,13 +112,7 @@ export const PopupContainer = styled.form`
   }
   .c1 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #4f9153;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -106,13 +121,7 @@ export const PopupContainer = styled.form`
   }
   .c2 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #fc8eac;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -121,13 +130,7 @@ export const PopupContainer = styled.form`
   }
   .c3 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #f5ac70;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -136,13 +139,7 @@ export const PopupContainer = styled.form`
   }
   .c4 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #555555;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -151,13 +148,7 @@ export const PopupContainer = styled.form`
   }
   .c5 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #326872;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -166,13 +157,7 @@ export const PopupContainer = styled.form`
   }
   .c6 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
       border: 2px solid #6f2da8;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
     }
 
     input[type="radio"]:checked {
@@ -181,13 +166,7 @@ export const PopupContainer = styled.form`
   }
   .c7 {
     input[type="radio"] {
-      appearance: none;
-      width: 30px;
-      height: 30px;
-      border: 2px solid #829f82;
-      border-radius: 50%;
-      background-clip: content-box;
-      padding: 3px;
+      border: 2px solid #829f82; 
     }
 
     input[type="radio"]:checked {
@@ -195,8 +174,15 @@ export const PopupContainer = styled.form`
     }
   }
 
-  .you {
-    cursor: default;
+  .c0, .c1, .c2, .c3, .c4, .c5, .c6, .c7 {
+    input[type="radio"] {
+      border-radius: 50%;
+      background-clip: content-box;
+      padding: 3px;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+    }
   }
 `;
 
