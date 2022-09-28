@@ -13,7 +13,7 @@ const Calender = ({
   events = [],
   date = new Date(),
   onNavigate,
-  view = "month",
+  view,
   onView,
   views = {
     day: true,
