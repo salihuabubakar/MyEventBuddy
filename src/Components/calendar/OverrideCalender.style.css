@@ -6,12 +6,30 @@
 }
 
 .rbc-current {
-  color: #EA4335;
+  /* color: #EA4335; */
+  color: #fff;
+  position: relative;
+  bottom: 10px;
+}
+
+.rbc-current::before {
+  background-color: #1A73E8;
+  content: '';
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  left: 19.5px;
+  top: 9px;
+  z-index: -1;
 }
 
 .rbc-today {
   background-color: none;
   font-weight: 900;
+  color: #1A73E8;
 }
 
 .rbc-month-row {

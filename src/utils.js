@@ -14,7 +14,7 @@ export const dayPropGetter = (date) => {
     return {
       style: {
         borderRadius: "4px",
-        color: "#EA4335",
+        // color: "#EA4335",
         backgroundColor: "#fff",
       },
     };
