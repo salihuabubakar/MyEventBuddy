@@ -23,26 +23,6 @@ export const dayPropGetter = (date) => {
   };
 };
 
-export const cellPropGetter = (date) => {
-  let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
-  let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
-  if (currentDate == allDate)
-    return {
-      style: {
-        borderRadius: "4px",
-        // color: "#EA4335",
-        backgroundColor: "#fff",
-      },
-    };
-  return {
-    style: {
-      backgroundColor: "#fff",
-      textAlign: "center",
-      // border: "0.5px solid #E7E7E8",
-    },
-  };
-};
-
 export const eventPropGetter = (event) => {
 
   const backgroundColor = event.hexCodeColor;

@@ -124,7 +124,6 @@ export const Header = styled.div`
 
   .select {
     margin-left: 10px;
-    border: 2px solid #ddd;
     outline: none;
   }
 
