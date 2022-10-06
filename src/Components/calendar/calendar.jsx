@@ -4,7 +4,7 @@ import moment from "../../lib/moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import "./OverrideCalender.style.css";
+import { Container } from "./OverrideCalender.style.js";
 
 // const DragAndDropCalendar = withDragAndDrop(Cal);
 const DragAndDropCalendar = Cal;
@@ -35,25 +35,29 @@ const Calender = ({
     },
   });
   const localizer = momentLocalizer(moment);
+  let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
+  let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
   return (
-    <DragAndDropCalendar
-      {...{
-        localizer,
-        events,
-        date,
-        onNavigate,
-        view,
-        onView,
-        views,
-        getNow,
-        accessors,
-        selectable,
-        min,
-        max,
-      }}
-      resizable
-      {...props}
-    />
+    <Container currentDay={currentDate === allDate}>
+      <DragAndDropCalendar
+        {...{
+          localizer,
+          events,
+          date,
+          onNavigate,
+          view,
+          onView,
+          views,
+          getNow,
+          accessors,
+          selectable,
+          min,
+          max,
+        }}
+        resizable
+        {...props}
+      />
+    </Container>
   );
 };
 

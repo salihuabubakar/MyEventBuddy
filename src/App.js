@@ -1,4 +1,4 @@
-import { useState, useContext, useReducer, useMemo, useEffect } from "react";
+import React, { useState, useContext, useReducer, useMemo, useEffect } from "react";
 import Header from "./Components/header";
 import moment from "moment";
 import Calendar from "./Components/calendar/calendar";
@@ -11,6 +11,7 @@ import {
   Event,
   accessors,
   dayPropGetter,
+  cellPropGetter,
   eventPropGetter,
   onDragStart,
   onKeyPressEvent,
@@ -136,7 +137,7 @@ const App = () => {
   }
 
   return (
-    <div className="App" style={{ height: "98vh" }}>
+    <React.Fragment>
       {showEventModal && (
         <EventModal
           dispatchCalEvent={dispatchCalEvent}
@@ -158,6 +159,7 @@ const App = () => {
           onDoubleClickEvent,
           onKeyPressEvent,
           dayPropGetter,
+          cellPropGetter,
           eventPropGetter,
         }}
         // onEventDrop={moveEvent}
@@ -173,13 +175,13 @@ const App = () => {
           event: Event,
         }}
         messages={{
-          noEventsInRange: `oops! No Schedules Available`,
+          noEventsInRange: `oops! No Schedules available in this range`,
           date: "Date Header",
           time: "Time Header",
           event: "Shift Header"
         }}
       />
-    </div>
+    </React.Fragment>
   );
 };
 

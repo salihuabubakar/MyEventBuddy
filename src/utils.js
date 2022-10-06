@@ -4,13 +4,29 @@ export const accessors = {
 };
 
 export const dayPropGetter = (date) => {
-  let currentDate = `${new Date().getDate()} ${
-    new Date().getMonth() + 1
-  } ${new Date().getFullYear()}`;
-  let allDate = `${date.getDate()} ${
-    date.getMonth() + 1
-  } ${date.getFullYear()}`;
-  if (allDate === currentDate)
+  let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
+  let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
+  if (currentDate == allDate)
+    return {
+      style: {
+        borderRadius: "4px",
+        // color: "blue",
+        backgroundColor: "#fff",
+      },
+    };
+  return {
+    style: {
+      backgroundColor: "#fff",
+      textAlign: "center",
+      // border: "0.5px solid #E7E7E8",
+    },
+  };
+};
+
+export const cellPropGetter = (date) => {
+  let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
+  let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
+  if (currentDate == allDate)
     return {
       style: {
         borderRadius: "4px",
@@ -37,7 +53,7 @@ export const eventPropGetter = (event) => {
     border: "none",
     outLine: "none",
     fontWeight: "bold",
-    borderLeft: "2px solid red",
+    borderLeft: "2px solid #326872",
     borderTopLeftRadius: "5px",
     borderBottomLeftRadius: "5px",
   };
