@@ -6,11 +6,10 @@ export const accessors = {
 export const dayPropGetter = (date) => {
   let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
   let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
-  if (currentDate == allDate)
+  if (currentDate === allDate)
     return {
       style: {
         borderRadius: "4px",
-        // color: "blue",
         backgroundColor: "#fff",
       },
     };
@@ -18,7 +17,6 @@ export const dayPropGetter = (date) => {
     style: {
       backgroundColor: "#fff",
       textAlign: "center",
-      // border: "0.5px solid #E7E7E8",
     },
   };
 };

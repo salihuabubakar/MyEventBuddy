@@ -15,7 +15,6 @@ import {
   InnerHeaderContainer,
   Overlay,
 } from "./header.style";
-import * as dates from "date-arithmetic";
 import { setGlobalState } from '../../context/GlobalState';
 
 

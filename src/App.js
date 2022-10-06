@@ -11,7 +11,6 @@ import {
   Event,
   accessors,
   dayPropGetter,
-  cellPropGetter,
   eventPropGetter,
   onDragStart,
   onKeyPressEvent,
@@ -74,22 +73,12 @@ const App = () => {
     setSelectedStartDate(start);
     setSelectedEndDate(end)
     setGlobalState("showEventModal", true);
-    console.log("onSelectSlot: ", { start, end, action });
-    console.log(start);
   };
-
-  console.log("DaySelected...", selectedStartDate);
-
-  // let strDateTime = selectedStartDate;
-  // let myDate = new Date(strDateTime);
-  // console.log("converted date", myDate.toUTCString());
 
   const onSelectEvent = (event) => {
 
     setGlobalState("selectedEvent", event);
     setGlobalState("showEventModal", true);
-
-    console.log("OnselectEvent: ", event);
   };
 
   const onDoubleClickEvent = (event) => {
@@ -132,10 +121,6 @@ const App = () => {
   let pm8 = today.set("hour", 21).set("minutes", 0).toDate();
   let am8 = today.set("hour", 8).set("minutes", 0).toDate();
 
-  const ErrorMessage = () => {
-    return  <h1>No Events in this ranges</h1>;
-  }
-
   return (
     <React.Fragment>
       {showEventModal && (
@@ -159,7 +144,6 @@ const App = () => {
           onDoubleClickEvent,
           onKeyPressEvent,
           dayPropGetter,
-          cellPropGetter,
           eventPropGetter,
         }}
         // onEventDrop={moveEvent}

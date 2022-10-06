@@ -12,7 +12,6 @@ export const Container = styled.body`
   height: 98vh;
 
   .rbc-current {
-    /* color: #EA4335; */
     color: ${(props) => (props.currentDay ? "#fff" : "")};
     position: relative;
     bottom: 10px;

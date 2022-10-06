@@ -73,7 +73,6 @@ export const Span = styled.span`
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&family=Roboto:wght@300&display=swap');
 
   font-size: 1rem;
-  /* font-family: 'Poppins', sans-serif; */
   font-family: 'Roboto', sans-serif;
   font-weight: 900;
   margin: 0 2px;
