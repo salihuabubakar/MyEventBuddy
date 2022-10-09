@@ -17,14 +17,14 @@ export const Container = styled.body`
   height: 98vh;
 
   .rbc-current {
-    color: ${(props) => (props.currentDay ? "#fff" : "")};
+    color: ${(props) => (props.currentDate ? "#fff" : "")};
     position: relative;
     bottom: 10px;
   }
 
   .rbc-current::before {
-    ${({ currentDay }) =>
-      currentDay &&
+    ${({ currentDate }) =>
+      currentDate &&
       `
       background-color: #1A73E8;
       content: "";

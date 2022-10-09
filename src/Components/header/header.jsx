@@ -22,6 +22,12 @@ const Header = (toolbar) => {
 
   const {onView, onNavigate, date} = toolbar;
 
+  let nowDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
+  let currentDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
+
+  console.log("nowDate", nowDate);
+  console.log("CurrentDate", currentDate);
+
     const [dayChange, setDayChange] = useState("");
 
     const [show, setShow] = useState(false);
@@ -79,13 +85,8 @@ const Header = (toolbar) => {
 
     const goToCurrent = () => {
       const now = new Date();
-      if(dayChange === "Day") {
-        now.getDay();
-      }else {
-        date.setMonth(now.getMonth());
-        date.setYear(now.getFullYear());
-      }
-
+      date.setMonth(now.getMonth());
+      date.setYear(now.getFullYear());
       onNavigate("current", now);
     };
 

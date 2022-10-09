@@ -11,7 +11,7 @@ const DragAndDropCalendar = Cal;
 
 const Calender = ({
   events = [],
-  date = new Date(),
+  date,
   onNavigate,
   view,
   onView,
@@ -35,10 +35,10 @@ const Calender = ({
     },
   });
   const localizer = momentLocalizer(moment);
-  let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
-  let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
+  let nowDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
+  let currentDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
   return (
-    <Container currentDay={currentDate === allDate}>
+    <Container currentDate={currentDate === nowDate}>
       <DragAndDropCalendar
         {...{
           localizer,
