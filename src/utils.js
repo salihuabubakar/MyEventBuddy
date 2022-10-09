@@ -1,11 +1,18 @@
+import checkIcon from "./img/check-mark.png";
+import { EventContainer } from "./Components/EventModal/EventModal.style"
+
 export const accessors = {
   draggableAccessor: (event) => !event.blocked,
   resizableAccessor: (event) => !event.blocked,
 };
 
 export const dayPropGetter = (date) => {
-  let currentDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
-  let allDate = `${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`;
+  let currentDate = `${new Date().getDate()} ${
+    new Date().getMonth() + 1
+  } ${new Date().getFullYear()}`;
+  let allDate = `${date.getDate()} ${
+    date.getMonth() + 1
+  } ${date.getFullYear()}`;
   if (currentDate === allDate)
     return {
       style: {
@@ -22,7 +29,6 @@ export const dayPropGetter = (date) => {
 };
 
 export const eventPropGetter = (event) => {
-
   const backgroundColor = event.hexCodeColor;
   let newStyle = {
     backgroundColor: backgroundColor,
@@ -59,17 +65,17 @@ export const onSelecting = (range) => {
 
 export const Event = ({ event }) => {
   return (
-    <span>
-      <>
-        <span
-          style={{ fontWeight: "bold", marginRight: "20px" }}
-          key={event.id}
-        >
-          {event.title}
-        </span>
-        <span style={{fontWeight: "lighter"}}>{event.staff.label}</span>
-      </>
-    </span>
+    <EventContainer isComplete={event.checkToComplete} key={event.id} style={{ fontSize: "12px" }}>
+      <span style={{position: "relative", top: "2px", marginRight: "2px" }}>
+        {event.checkToComplete && (
+          <img style={{ width: "12px" }} src={checkIcon} alt="checkIcon" />
+        )}
+      </span>
+      <span style={{ fontWeight: "bold", marginRight: "20px" }}>
+        {event.title}
+      </span>
+      <span style={{ fontWeight: "lighter" }}>{event.staff.label}</span>
+    </EventContainer>
   );
 };
 
@@ -77,7 +83,7 @@ export const initEvents = () => {
   const storageEvents = localStorage.getItem("savedEvents");
   const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
   return parsedEvents;
-}
+};
 
 export const savedEventsReducer = (state, { type, payload }) => {
   switch (type) {

@@ -12,6 +12,7 @@ import {
   SelectWrapper,
   DateWrapper,
   ColorWrapper,
+  CheckToCompleteWrapper,
 } from "./EventModal.style";
 
 import Select from 'react-select';
@@ -211,9 +212,9 @@ const EventModal = ({
             </LocalizationProvider>
           </DateWrapper>
 
-          <div>
-            {/* {selectedEvent.id ? (
-              <span>
+          <CheckToCompleteWrapper>
+            {selectedEvent.id ? (
+              <span className="completed">
                 <input
                   onChange={handleCheckChange}
                   checked={selectedEvent.id ? checkToComplete : ""}
@@ -221,10 +222,10 @@ const EventModal = ({
                   name="check"
                   id=""
                 />{" "}
-                Completed
+                Mark as completed
               </span>
-            ) : null} */}
-          </div>
+            ) : null}
+          </CheckToCompleteWrapper>
 
           <ColorWrapper>
             <label class="c0">

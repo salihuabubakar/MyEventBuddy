@@ -9,6 +9,11 @@ export const Container = styled.body`
     padding: 0.5%;
   }
 
+  .rbc-calendar {
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+  }
+
   height: 98vh;
 
   .rbc-current {
@@ -18,7 +23,9 @@ export const Container = styled.body`
   }
 
   .rbc-current::before {
-    ${({ currentDay }) => currentDay && `
+    ${({ currentDay }) =>
+      currentDay &&
+      `
       background-color: #1A73E8;
       content: "";
       width: 25px;
