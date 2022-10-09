@@ -10,6 +10,9 @@ export const PopupContainer = styled.form`
   display: flex;
   flex-direction: column;
 
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+
   ${mobile} {
     width: 95%;
   }
@@ -96,6 +99,12 @@ export const DateWrapper = styled.div`
   }
 
   .end-time {
+  }
+`;
+
+export const CheckToCompleteWrapper = styled.div`
+  .completed {
+    color: gray;
   }
 `;
 
@@ -206,4 +215,8 @@ export const PopupOverlay = styled.div`
   width: 100%;
   height: 100%;
   background: #607087b3;
+`;
+
+export const EventContainer = styled.span`
+  text-decoration: ${(props) => (props.isComplete ? 'line-through' : 'none')};
 `;
