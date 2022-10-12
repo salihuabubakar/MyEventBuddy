@@ -13,6 +13,7 @@ import {
   DateWrapper,
   ColorWrapper,
   CheckToCompleteWrapper,
+  PopupOverlay,
 } from "./EventModal.style";
 
 import Select from 'react-select';
@@ -49,6 +50,11 @@ const EventModal = ({
   ];
 
   const [selectedEvent] = useGlobalState("selectedEvent");
+  const [show, setShow] = useState(false);
+
+  const toggleSidebar = async () => {
+    setShow(!show);
+  };
 
   const [startTime, setStartTime] = useState(
     selectedEvent.start ? selectedEvent.start : dayjs()
@@ -136,14 +142,15 @@ const EventModal = ({
 
   return (
     <PopupWrapper>
+      <PopupOverlay />
       <PopupContainer>
         <header>
           <div>
-            {selectedEvent.id && (
-              <span onClick={handleDeleteEvent}>
-                <img src={TrashIcon} alt="trashIcon" />
-              </span>
-            )}
+            <span style={{ fontWeight: "bold" }}>
+              {selectedEvent.id ? "Edit Event" : "Add Event"}
+            </span>
+          </div>
+          <div>
             <span onClick={handleClosingModal}>
               <img src={CancleIcon} alt="cancelIcon" />
             </span>
@@ -228,79 +235,99 @@ const EventModal = ({
           </CheckToCompleteWrapper>
 
           <ColorWrapper>
-            <label class="c0">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[0]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
-            <label class="c1">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[1]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
-            <label class="c2">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[2]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
-            <labe class="c3">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[3]}
-                onChange={handleHexCodeColorState}
-              />
-            </labe>
-            <label class="c4">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[4]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
-            <label class="c5">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[5]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
-            <label class="c6">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[6]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
-            <label class="c7">
-              <input
-                type="radio"
-                name="hexCode"
-                value={colors[7]}
-                onChange={handleHexCodeColorState}
-              />
-            </label>
+            <div>
+              <label>Event Colors</label>
+            </div>
+            <div>
+              <label class="c0">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[0]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+              <label class="c1">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[1]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+              <label class="c2">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[2]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+              <labe class="c3">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[3]}
+                  onChange={handleHexCodeColorState}
+                />
+              </labe>
+              <label class="c4">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[4]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+              <label class="c5">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[5]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+              <label class="c6">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[6]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+              <label class="c7">
+                <input
+                  type="radio"
+                  name="hexCode"
+                  value={colors[7]}
+                  onChange={handleHexCodeColorState}
+                />
+              </label>
+            </div>
           </ColorWrapper>
         </PopCardContentWrapper>
-        <button type="submit" onClick={handleSubmit}>
-          {selectedEvent.id ? (
-            <img src={UpdateIcon} alt="updateIcon" />
-          ) : (
-            <img src={AddeIcon} alt="plusIcon" />
-          )}
-        </button>
+        <div className="footer">
+          <div>
+            {selectedEvent.id && (
+              <button type="submit" onClick={handleDeleteEvent}>
+                Delete
+              </button>
+            )}
+          </div>
+
+          <div>
+            <button
+              style={{ backgroundColor: "#0D6EFD" }}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              {selectedEvent.id ? "Update" : "Save"}
+            </button>
+            <button type="submit" onClick={handleClosingModal}>
+              Cancel
+            </button>
+          </div>
+        </div>
       </PopupContainer>
     </PopupWrapper>
   );

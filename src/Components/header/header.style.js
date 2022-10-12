@@ -145,11 +145,21 @@ export const Header = styled.div`
   .right {
     display: flex;
     justify-content: flex-end;
+    padding: 0;
+    margin: 0;
     .shift-btn {
-      padding-top: 2.5;
-      padding-bottom: 2.5;
+      /* padding-top: 2.5;
+      padding-bottom: 2.5; */
       max-width: 150px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 0 5px;
+      margin: 0;
+
+      img {
+        width: 17px;
+      }
     }
   }
 `;

@@ -16,6 +16,7 @@ import {
   Overlay,
 } from "./header.style";
 import { setGlobalState } from '../../context/GlobalState';
+import AddeIcon from "../../img/add.png";
 
 
 const Header = (toolbar) => {
@@ -89,6 +90,7 @@ const Header = (toolbar) => {
       date.setYear(now.getFullYear());
       onNavigate("current", now);
     };
+    
 
     const label = () => {
       const fullDate = moment(date);
@@ -191,7 +193,10 @@ const Header = (toolbar) => {
             </div>
             <div className="right">
               <Button className="btn shift-btn" size="large" onClick={addShift}>
-                Add Shift
+                <div>
+                  <img src={AddeIcon} />
+                </div>
+                <div>Add Event</div>
               </Button>
             </div>
           </HeaderDiv>

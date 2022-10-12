@@ -5,6 +5,7 @@ const {mobile} = media
 export const PopupContainer = styled.form`
   background-color: white;
   max-width: 422px;
+  font-size: 12px;
   width: 100%;
   position: absolute;
   display: flex;
@@ -20,22 +21,25 @@ export const PopupContainer = styled.form`
   box-shadow: 1px 3px 33px -7px rgba(0, 0, 0, 0.54);
   -webkit-box-shadow: 1px 3px 33px -7px rgba(0, 0, 0, 0.54);
   -moz-box-shadow: 1px 3px 33px -7px rgba(0, 0, 0, 0.54);
-  border-radius: 6px 6px 6px 6px;
-  -webkit-border-radius: 6px 6px 6px 6px;
-  -moz-border-radius: 6px 6px 6px 6px;
+  border-radius: 8px;
+  /* -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px; */
 
   header {
     background-color: #f3f4f6;
     height: 30px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
 
     div {
       display: flex;
       justify-content: flex-end;
       span {
         cursor: pointer;
-        &:hover {
-          color: red;
-        }
         margin: 5px;
         img {
           width: 20px;
@@ -44,13 +48,27 @@ export const PopupContainer = styled.form`
     }
   }
 
-  button {
-    cursor: pointer;
-    padding: 1%;
-    border: none;
-    background-color: #f3f4f6;
-    img {
-      width: 30px;
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+
+    div {
+      width: 30%;
+      display: flex;
+      justify-content: space-between;
+      button {
+        margin: 0 3px;
+      }
+    }
+
+    button {
+      cursor: pointer;
+      padding: 5%;
+      border: none;
+      background-color: #6c757d;
+      border-radius: 3px;
+      color: #fff;
     }
   }
 `;
@@ -110,6 +128,7 @@ export const CheckToCompleteWrapper = styled.div`
 
 export const ColorWrapper = styled.div`
   cursor: default;
+  margin-top: 10px;
   .c0 {
     input[type="radio"] {
       border: 2px solid #251607;
@@ -214,7 +233,7 @@ export const PopupWrapper = styled.div`
 export const PopupOverlay = styled.div`
   width: 100%;
   height: 100%;
-  background: #607087b3;
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 export const EventContainer = styled.span`
