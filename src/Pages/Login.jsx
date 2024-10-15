@@ -6,19 +6,25 @@ import { Label } from "../Components/Label/label"
 import { Separator } from "../Components/Separator/separator"
 import { ChevronRight } from "lucide-react"
 import { useNavigate, useLocation } from 'react-router-dom';
+import { AppwriteException, OAuthProvider, account, ID } from "../appwrite"
+import useCurrentUser from "../hook/getCurrentUser";
+import toast from 'react-hot-toast';
 
 export default function Login() {
+
+  const { currentUser } = useCurrentUser();
+
+  console.log("user:", currentUser);
 
   const navigate = useNavigate();
   const location = useLocation();
   
   const [isSignUp, setIsSignUp] = useState(false)
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   })
-
-  const [isGoogleRegistration, setIsGoogleRegistration] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -28,24 +34,74 @@ export default function Login() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
+    try {
+      console.log("Form submitted SignUp:", formData)
+      await account.create(ID.unique(), formData.email, formData.password, formData.name);
+      toast.success("Account Created!");
+      setIsSignUp(false);
+    } catch (err) {
+      if (err instanceof AppwriteException) {
+        console.log(err.message)
+        console.log("Error1")
+      } else {
+        console.log(err.message)
+        console.log("Error2")
+      }
+    }
+  }
 
-    // For this example, we'll create a simple token
-    const token = btoa(formData.email + ':' + formData.password); // base64 encode
-    
-    // Store the token in localStorage
-    localStorage.setItem('authToken', token);
-    
+  const handleSignIn = async (e) => {
+    e.preventDefault()
+    try {
+      console.log("Form submittedLogin:", formData);
+      await account.createEmailPasswordSession(formData.email, formData.password);
+      toast.success("Successfully logged in!");
+      navigateFrom()
+    } catch (err) {
+      if (err instanceof AppwriteException) {
+        console.log(err.message)
+        console.log("Error1")
+      } else {
+        console.log(err.message)
+        console.log("Error2")
+      }
+    }
+  }
+
+  const handleGoogleAuth = async () => {
+    try {
+      console.log("Google authentication initiated");
+      const baseUrl = process.env.VERCEL_ENV === 'production' ? 'https://myeventbuddy.vercel.app' : 'http://localhost:3000';
+
+      const successUrl = `${baseUrl}/app/dashboard`;
+      const failureUrl = `${baseUrl}/login`;
+      
+      console.log("Success URL:", successUrl);
+      console.log("Failure URL:", failureUrl);
+
+      await account.createOAuth2Session(
+        OAuthProvider.Google, // provider
+        successUrl, // redirect here on success
+        failureUrl, // redirect here on failure
+        ['openid', 'profile', 'email'] // scopes
+      );
+    } catch (err) {
+      if (err instanceof AppwriteException) {
+        console.log(err.message)
+        console.log("Error1")
+      } else {
+        console.log(err.message)
+        console.log("Error2")
+      }
+    }
+  }
+
+  const navigateFrom = () => {
     // Redirect the user to the page they were trying to access, or to dashboard if no specific page was saved
     const from = location.state?.from?.pathname || "/app/dashboard";
     navigate(from, { replace: true });
-  }
-
-  const handleGoogleAuth = () => {
-    setIsGoogleRegistration(true)
-    console.log("Google authentication initiated")
   }
 
   return (
@@ -59,8 +115,22 @@ export default function Login() {
             {isSignUp ? "Sign up to get started" : "Sign in to your account"}
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={isSignUp ? handleSignUp : handleSignIn}>
           <CardContent className="space-y-4">
+            {isSignUp && (
+              <div className="space-y-2">
+                <Label htmlFor="email">Name</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Enter your fullname"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input

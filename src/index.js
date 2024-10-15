@@ -9,6 +9,7 @@ import Dashboard from './Pages/Dashboard';
 import Login from './Pages/Login';
 import './index.css';
 import ProtectedRoute from './ProtectedRoute';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
   {
@@ -25,13 +26,14 @@ const router = createBrowserRouter([
       <ProtectedRoute>
         <Dashboard />
       </ProtectedRoute>
-    ),
-  },
+    )
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <Toaster />
   </React.StrictMode>
 );

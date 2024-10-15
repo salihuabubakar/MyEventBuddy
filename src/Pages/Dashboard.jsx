@@ -18,11 +18,24 @@ import {
   initEvents,
   savedEventsReducer,
 } from "../utils";
+import useCurrentUser from "../hook/getCurrentUser";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
+  const { currentUser } = useCurrentUser();
+  const location = useLocation();
   const now = () => new Date();
 
   let selectTimeout;
+;
+
+  console.log("googleProfile::-", currentUser?.prefs);
+  console.log("emailProfile::-", {emal: currentUser?.email, name: currentUser?.name});
+
+  const from = location.state?.from?.pathname || "/app/dashboard";
+
+  console.log("path::-", window.location.href);
+
 
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [selectedEndDate, setSelectedEndDate] = useState();
