@@ -73,7 +73,7 @@ export default function Login() {
   const handleGoogleAuth = async () => {
     try {
       console.log("Google authentication initiated");
-      const baseUrl = process.env.VERCEL_ENV === 'production' ? 'https://myeventbuddy.vercel.app' : 'http://localhost:3000';
+      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://myeventbuddy.vercel.app' : 'http://localhost:3000';
 
       const successUrl = `${baseUrl}/app/dashboard`;
       const failureUrl = `${baseUrl}/login`;
