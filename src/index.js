@@ -9,6 +9,7 @@ import Dashboard from './Pages/Dashboard';
 import Login from './Pages/Login';
 import './index.css';
 import ProtectedRoute from './ProtectedRoute';
+import Verify from './Pages/Verify';
 import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/verify",
+    element: <Verify />,
   },
   {
     path: "/app/dashboard",

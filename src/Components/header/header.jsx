@@ -17,13 +17,10 @@ import {
 } from "./header.style";
 import { setGlobalState } from '../../context/GlobalState';
 import AddeIcon from "../../img/add.png";
-import CustomButton from "../Button/button"
-import { account } from '../../appwrite';
-import { useNavigate } from 'react-router-dom';
 
 
 const Header = (toolbar) => {
-  const navigate = useNavigate();
+  
   const {onView, onNavigate, date} = toolbar;
 
   let nowDate = `${new Date().getDate()} ${new Date().getMonth() + 1} ${new Date().getFullYear()}`;
@@ -44,10 +41,6 @@ const Header = (toolbar) => {
       setGlobalState("showEventModal", true);
     }
 
-    const logout = async () => {
-      await account.deleteSession('current');
-      navigate('/', {replace: true})
-    }
 
     const handleDayChange = (event) => {
       const value = event.target.value;
@@ -200,7 +193,6 @@ const Header = (toolbar) => {
               </Button>
             </div>
             <div className="right">
-              <Button onClick={logout}>Logout</Button>
               <Button className="btn shift-btn" size="large" onClick={addShift}>
                 <div>
                   <img src={AddeIcon} />

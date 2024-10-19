@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { Button } from "../Components/Button/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../Components/Card/card"
 import { Input } from "../Components/Input/input"
@@ -6,16 +6,16 @@ import { Label } from "../Components/Label/label"
 import { Separator } from "../Components/Separator/separator"
 import { ChevronRight } from "lucide-react"
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AppwriteException, OAuthProvider, account, ID } from "../appwrite"
-import useCurrentUser from "../hook/getCurrentUser";
+import { OAuthProvider, account, ID } from "../appwrite"
 import toast from 'react-hot-toast';
+import useCurrentUser from "../hook/getCurrentUser"
+import { handleAppwriteError } from "../errorHandler"
+
+export const baseUrl = process.env.NODE_ENV === 'production' ? 'https://myeventbuddy.vercel.app' : 'http://localhost:3000';
 
 export default function Login() {
-
+  
   const { currentUser } = useCurrentUser();
-
-  console.log("user:", currentUser);
-
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -34,52 +34,45 @@ export default function Login() {
     }))
   }
 
+  const navigateFrom = useCallback(() => {
+    // Redirect the user to the page they were trying to access, or to dashboard if no specific page was saved
+    const from = location.state?.from?.pathname || "/app/dashboard";
+    navigate(from, { replace: true });
+  }, [location.state?.from?.pathname, navigate])
+
+  useEffect(() => {
+    if(currentUser) {
+      navigateFrom()
+    }
+  }, [currentUser, navigateFrom]);
+
   const handleSignUp = async (e) => {
     e.preventDefault()
     try {
-      console.log("Form submitted SignUp:", formData)
       await account.create(ID.unique(), formData.email, formData.password, formData.name);
       toast.success("Account Created!");
       setIsSignUp(false);
     } catch (err) {
-      if (err instanceof AppwriteException) {
-        console.log(err.message)
-        console.log("Error1")
-      } else {
-        console.log(err.message)
-        console.log("Error2")
-      }
+      handleAppwriteError(err);
     }
   }
 
   const handleSignIn = async (e) => {
     e.preventDefault()
     try {
-      console.log("Form submittedLogin:", formData);
       await account.createEmailPasswordSession(formData.email, formData.password);
       toast.success("Successfully logged in!");
       navigateFrom()
     } catch (err) {
-      if (err instanceof AppwriteException) {
-        console.log(err.message)
-        console.log("Error1")
-      } else {
-        console.log(err.message)
-        console.log("Error2")
-      }
+      handleAppwriteError(err);
     }
   }
 
   const handleGoogleAuth = async () => {
     try {
-      console.log("Google authentication initiated");
-      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://myeventbuddy.vercel.app' : 'http://localhost:3000';
 
       const successUrl = `${baseUrl}/app/dashboard`;
       const failureUrl = `${baseUrl}/login`;
-      
-      console.log("Success URL:", successUrl);
-      console.log("Failure URL:", failureUrl);
 
       await account.createOAuth2Session(
         OAuthProvider.Google, // provider
@@ -88,21 +81,10 @@ export default function Login() {
         ['openid', 'profile', 'email'] // scopes
       );
     } catch (err) {
-      if (err instanceof AppwriteException) {
-        console.log(err.message)
-        console.log("Error1")
-      } else {
-        console.log(err.message)
-        console.log("Error2")
-      }
+      handleAppwriteError(err);
     }
   }
 
-  const navigateFrom = () => {
-    // Redirect the user to the page they were trying to access, or to dashboard if no specific page was saved
-    const from = location.state?.from?.pathname || "/app/dashboard";
-    navigate(from, { replace: true });
-  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">

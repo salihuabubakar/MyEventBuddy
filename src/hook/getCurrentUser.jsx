@@ -14,7 +14,9 @@ const useCurrentUser = () => {
           name: user?.name,
           email: user?.email,
           phone: user?.phone,
-          status: user?.status
+          status: user?.status,
+          prefs: user?.prefs,
+          emailVerification: user?.emailVerification
         });
 
         const session = await account.getSession('current');

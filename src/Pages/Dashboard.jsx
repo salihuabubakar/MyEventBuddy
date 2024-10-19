@@ -19,26 +19,23 @@ import {
   savedEventsReducer,
 } from "../utils";
 import useCurrentUser from "../hook/getCurrentUser";
-import { useLocation } from "react-router-dom";
+import { baseUrl } from "./Login";
+import { account } from "../appwrite";
+import HeaderNav from "../Components/HeaderNav/haderNav";
 
 const Dashboard = () => {
   const { currentUser } = useCurrentUser();
-  const location = useLocation();
   const now = () => new Date();
 
   let selectTimeout;
-;
 
-  console.log("googleProfile::-", currentUser?.prefs);
-  console.log("emailProfile::-", {emal: currentUser?.email, name: currentUser?.name});
-
-  const from = location.state?.from?.pathname || "/app/dashboard";
+  console.log("Profile::-", currentUser);
 
   console.log("path::-", window.location.href);
 
-
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [selectedEndDate, setSelectedEndDate] = useState();
+  const [isVerifiying, setIsVerified] = useState(false);
 
   const [showEventModal] = useGlobalState("showEventModal");
 
@@ -76,7 +73,7 @@ const Dashboard = () => {
 
 
   const [date, setDate] = useState(now());
-  const [view, setView] = useState("week");
+  const [view, setView] = useState("month");
 
   const onNavigate = (newDate) => setDate(newDate);
   const onView = (newView) => setView(newView);
@@ -102,6 +99,17 @@ const Dashboard = () => {
     }, 250);
   };
 
+  const handleEmailVerification = async () => {
+    try {
+      setIsVerified(true);
+      await account.createVerification(`${baseUrl}/verify`);
+    } catch (error) {
+      console.error(error)
+      console.log(error);
+      setIsVerified(false);
+    }
+  }
+
   // const moveEvent = ({ event, start, end, isAllDay: droppedOnAllDaySlot }) => {
   //   let allDay = event.allDay;
 
@@ -118,7 +126,7 @@ const Dashboard = () => {
   //     return [...filtered, updatedEvent];
   //   });
 
-  //   // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+  //   alert(`${event.title} was dropped onto ${updatedEvent.start}`)
   // };
 
   // const resizeEvent = ({ event, start, end }) => {
@@ -127,12 +135,27 @@ const Dashboard = () => {
   //     return [...filtered, { ...event, start, end }];
   //   });
 
-  //   //alert(`${event.title} was resized to ${start}-${end}`)
+  //   alert(`${event.title} was resized to ${start}-${end}`)
   // };
 
   let today = moment();
   let pm8 = today.set("hour", 21).set("minutes", 0).toDate();
   let am8 = today.set("hour", 8).set("minutes", 0).toDate();
+
+  if ((currentUser && !currentUser?.emailVerification)) {
+    return (
+      <div className="flex items-center justify-center h-screen flex-col">
+        <p>Your email is not verifeid</p>
+        <button 
+          className="w-fit bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-full" 
+          size="sm" 
+          onClick={handleEmailVerification}
+        >
+          {isVerifiying ? "Please check your mail" : "Click to Verify"}
+        </button>
+      </div>
+    )
+  }
 
   return (
     <React.Fragment>
@@ -144,6 +167,7 @@ const Dashboard = () => {
         />
       )}
       <EmptySpace />
+      <HeaderNav />
       <Calendar
         {...{
           events,
