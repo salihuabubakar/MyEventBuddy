@@ -21,15 +21,16 @@ export const HeaderContainer = styled.div`
       align-items: center;
       justify-content: center;
       position: absolute;
-      top: 8px;
+      top: 70px;
       right: 10px;
-
       padding: 3.5% 4%;
       height: 25px;
       color: #000;
       border: 2px solid #ddd;
       width: 23%;
     }
+
+    margin-top: 70px;
   }
 
   @media screen and (max-width: 452px) {

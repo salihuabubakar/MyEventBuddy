@@ -159,14 +159,6 @@ const Dashboard = () => {
 
   return (
     <React.Fragment>
-      {showEventModal && (
-        <EventModal
-          dispatchCalEvent={dispatchCalEvent}
-          selectedStartDate={selectedStartDate}
-          selectedEndDate={selectedEndDate}
-        />
-      )}
-      <EmptySpace />
       <HeaderNav />
       <Calendar
         {...{
@@ -202,6 +194,13 @@ const Dashboard = () => {
           event: "Shift Header"
         }}
       />
+      {showEventModal && (
+        <EventModal
+          dispatchCalEvent={dispatchCalEvent}
+          selectedStartDate={selectedStartDate}
+          selectedEndDate={selectedEndDate}
+        />
+      )}
     </React.Fragment>
   );
 };
