@@ -1,9 +1,4 @@
 import React, { useState } from 'react'
-import {
-  Header as HeaderDiv,
-  Controls,
-  InnerHeaderContainer,
-} from "./header.style";
 import { setGlobalState } from '../../context/GlobalState';
 import { ChevronLeft, ChevronRight, ChevronDown, Plus } from 'lucide-react';
 
@@ -82,64 +77,56 @@ const Header = (toolbar) => {
     
 
     return (
-      <div>
-        <InnerHeaderContainer>
-          <HeaderDiv>
-            <div className="left">
-            <Controls>
-                <button className="p-2 hover:bg-gray-100 rounded-full" size="small" onClick={goToBack}>
-                  <ChevronLeft className="h-5 w-5 text-gray-600" />
-                </button>
-
-                <button className="p-2 hover:bg-gray-100 rounded-full" size="small" onClick={goToNext}>
-                  <ChevronRight className="h-5 w-5 text-gray-600" />
-                </button>
-              </Controls>
-
-              <button
-                className="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 mr-3"
-                size="large"
-                onClick={goToCurrent}
-              >
-                Today
-              </button>
-
-              <div className="relative">
-                <button 
-                  onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
-                  className="flex items-center space-x-1 text-lg font-semibold"
-                >
-                  <span>{dayChange || 'Month'}</span>
-                  <ChevronDown className="h-5 w-5 text-gray-600" />
-                </button>
-                {isMonthDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                    {views?.map(view => (
-                      <button
-                        key={view}
-                        onClick={() => handleDayChange(view)}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        {view}
-                      </button>
-                    ))}
-                  </div>
-                )}
+      <div className='flex items-center justify-between'>
+        <div className="flex items-center">
+          <div>
+            <button className="p-2 hover:bg-gray-100 rounded-full" size="small" onClick={goToBack}>
+              <ChevronLeft className="h-5 w-5 text-gray-600" />
+            </button>
+            <button className="p-2 hover:bg-gray-100 rounded-full" size="small" onClick={goToNext}>
+              <ChevronRight className="h-5 w-5 text-gray-600" />
+            </button>
+          </div>
+          <button
+            className="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 mr-3"
+            size="large"
+            onClick={goToCurrent}
+          >
+            Today
+          </button>
+          <div className="relative">
+            <button 
+              onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
+              className="flex items-center space-x-1 text-lg font-semibold"
+            >
+              <span>{dayChange || 'Month'}</span>
+              <ChevronDown className="h-5 w-5 text-gray-600" />
+            </button>
+            {isMonthDropdownOpen && (
+              <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                {views?.map(view => (
+                  <button
+                    key={view}
+                    onClick={() => handleDayChange(view)}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {view}
+                  </button>
+                ))}
               </div>
-
-            </div>
-            <div className="right">
-              <button
-                className="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 mr-3"
-                size="sm"
-                onClick={addShift}
-                title='Event'
-              >
-                <Plus className="h-5 w-5 text-gray-600" />
-              </button>
-            </div>
-          </HeaderDiv>
-        </InnerHeaderContainer>
+            )}
+          </div>
+        </div>
+        <div className="flex items-center">
+          <button
+            className="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 mr-3"
+            size="sm"
+            onClick={addShift}
+            title='Event'
+          >
+            <Plus className="h-5 w-5 text-gray-600" />
+          </button>
+        </div>
       </div>
     );
   };
