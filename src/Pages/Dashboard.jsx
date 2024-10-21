@@ -21,6 +21,7 @@ import useCurrentUser from "../hook/getCurrentUser";
 import { baseUrl } from "./Login";
 import { account } from "../appwrite";
 import HeaderNav from "../Components/HeaderNav/haderNav";
+import ProfilePage from "../Components/Profile/profile";
 
 const Dashboard = () => {
   const { currentUser } = useCurrentUser();
@@ -37,6 +38,7 @@ const Dashboard = () => {
   const [isVerifiying, setIsVerified] = useState(false);
 
   const [showEventModal] = useGlobalState("showEventModal");
+  const [showProfileModal] = useGlobalState("showProfileModal");
 
   const [dayEvents, setDayEvents] = useState([]);
 
@@ -55,12 +57,12 @@ const Dashboard = () => {
   }, [savedEvents]);
 
   useEffect(() => {
-    if (!showEventModal) {
+    if (!showEventModal || !showProfileModal) {
       setGlobalState("selectedEvent", "");
       setSelectedStartDate(null);
       setSelectedEndDate(null)
     }
-  }, [showEventModal]);
+  }, [showEventModal, showProfileModal]);
 
   const [events, setEvents] = useState();
 
@@ -204,6 +206,9 @@ const Dashboard = () => {
           selectedStartDate={selectedStartDate}
           selectedEndDate={selectedEndDate}
         />
+      )}
+      {showProfileModal && (
+        <ProfilePage currentUser={currentUser} />
       )}
     </React.Fragment>
   );

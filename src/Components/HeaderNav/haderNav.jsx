@@ -6,6 +6,7 @@ import { ChevronDown, Settings, User, LogOut } from 'lucide-react';
 import useCurrentUser from '../../hook/getCurrentUser';
 import { account } from '../../appwrite';
 import { useNavigate } from 'react-router-dom';
+import { setGlobalState } from '../../context/GlobalState';
 
 const HeaderNav = () => {
   const { currentUser } = useCurrentUser();
@@ -54,18 +55,18 @@ const HeaderNav = () => {
                     My Account
                   </DropdownMenu.Label>
                   <DropdownMenu.Separator className="my-1 h-px bg-gray-200" />
-                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
+                  <DropdownMenu.Item onClick={() => setGlobalState("showProfileModal", true)} className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
                     <User className="mr-2 h-4 w-4" />
-                    <Link onClick={(e) => e.preventDefault()} to="/profile">Profile</Link>
+                    <button>Profile</button>
                   </DropdownMenu.Item>
-                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
+                  <DropdownMenu.Item onClick={(e) => e.preventDefault()} className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
                     <Settings className="mr-2 h-4 w-4" />
                     <Link onClick={(e) => e.preventDefault()} to="/settings">Settings</Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Separator className="my-1 h-px bg-gray-200" />
-                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
+                  <DropdownMenu.Item onClick={logout} className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
                     <LogOut className="mr-2 h-4 w-4" />
-                    <button onClick={logout}>
+                    <button>
                       Logout
                     </button>
                   </DropdownMenu.Item>

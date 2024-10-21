@@ -11,6 +11,7 @@ const useCurrentUser = () => {
       try {
         const user = await account.get();
         setCurrentUser({
+          userId: user?.$id,
           name: user?.name,
           email: user?.email,
           phone: user?.phone,

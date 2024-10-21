@@ -18,6 +18,7 @@ import {
 import CancleIcon from "../../img/cancel.png";
 
 import {setGlobalState, useGlobalState} from "../../context/GlobalState";
+import useCurrentUser from "../../hook/getCurrentUser";
 
 const colors = [
   "#251607",
@@ -37,6 +38,7 @@ const EventModal = ({
   selectedEndDate,
 }) => {
 
+  const { currentUser } = useCurrentUser();
   const [selectedEvent] = useGlobalState("selectedEvent");
 
   console.log("start::", selectedStartDate, "end::", selectedEndDate)
@@ -79,6 +81,7 @@ const EventModal = ({
       checkToComplete,
       id,
       hexCodeColor,
+      userId: currentUser?.userId
     };
     if (selectedEvent.id) {
       dispatchCalEvent({ type: "update", payload: calendarEvent });
@@ -118,17 +121,12 @@ const EventModal = ({
 
   return (
     <PopupWrapper>
-      <PopupOverlay />
+      <PopupOverlay onClick={() => setGlobalState("showEventModal", false)} />
       <PopupContainer>
         <header>
           <div>
             <span style={{ fontWeight: "bold" }}>
               {selectedEvent.id ? "Edit Event" : "Add Event"}
-            </span>
-          </div>
-          <div>
-            <span onClick={handleClosingModal}>
-              <img src={CancleIcon} alt="cancelIcon" />
             </span>
           </div>
         </header>
