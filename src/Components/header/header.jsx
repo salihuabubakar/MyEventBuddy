@@ -1,22 +1,11 @@
 import React, { useState } from 'react'
-import moment from "../../lib/moment";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Button from "@mui/material/Button";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   Header as HeaderDiv,
   Controls,
-  Span,
-  HeaderContainer,
   InnerHeaderContainer,
-  Overlay,
 } from "./header.style";
 import { setGlobalState } from '../../context/GlobalState';
-import AddeIcon from "../../img/add.png";
+import { ChevronLeft, ChevronRight, ChevronDown, Plus } from 'lucide-react';
 
 
 const Header = (toolbar) => {
@@ -31,19 +20,17 @@ const Header = (toolbar) => {
 
     const [dayChange, setDayChange] = useState("");
 
-    const [show, setShow] = useState(false);
+    const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
 
-    const toggleSidebar = async () => {
-      setShow(!show);
-    };
 
     const addShift = () => {
       setGlobalState("showEventModal", true);
     }
 
+    const views = ["Day", "Week", "Month", "Agenda"]
 
-    const handleDayChange = (event) => {
-      const value = event.target.value;
+
+    const handleDayChange = (value) => {
       setDayChange(value);
       if (value === "Day") {
           onView("day");
@@ -58,6 +45,7 @@ const Header = (toolbar) => {
         onView("agenda");
         onNavigate("agenda");
       }
+      setIsMonthDropdownOpen(false)
     };
 
     const goToBack = () => {
@@ -93,117 +81,66 @@ const Header = (toolbar) => {
     };
     
 
-    const label = () => {
-      const fullDate = moment(date);
-      if (dayChange === "Day") {
-        return (
-          <span>
-            <Span>{fullDate.format("dddd")}</Span>
-            <Span>{fullDate.format("MMM")}</Span>
-            <Span>{fullDate.format("DD")}</Span>
-          </span>
-        );
-      } else if (dayChange === "Week") {
-        let startOfTheWeek = new Date(fullDate.startOf("week")._d).toDateString();
-        startOfTheWeek = startOfTheWeek.split(" ").slice(2, 3).join(" ");
-
-        let endOfTheWeek = new Date(fullDate.endOf("week")._d).toDateString();
-        endOfTheWeek = endOfTheWeek.split(" ").slice(2, 3).join(" ");
-
-        return (
-          <span>
-            <Span> {fullDate.format("MMM")}</Span>
-            <Span>
-              <span>{startOfTheWeek}</span> - <span>{endOfTheWeek}</span>
-            </Span>
-          </span>
-        );
-      } else if (dayChange === "Month") {
-        return (
-          <span>
-            <Span>{fullDate.format("MMM")}</Span>
-            <Span> {fullDate.format("YYYY")}</Span>
-          </span>
-        );
-      } else {
-        let startOfTheMonth = new Date(fullDate.startOf("month")._d).toDateString();
-        startOfTheMonth = startOfTheMonth.split(" ").slice(2, 3).join(" ");
-
-        let endOfTheMonth = new Date(fullDate.endOf("month")._d).toDateString();
-        endOfTheMonth = endOfTheMonth.split(" ").slice(2, 3).join(" ");
-        return (
-          <span>
-            <Span>{fullDate.format("MMM")}</Span>
-            <Span>
-              <span>{startOfTheMonth}</span> - <span>{endOfTheMonth}</span>
-            </Span>
-          </span>
-        );
-      }
-    };
-
     return (
-      <HeaderContainer>
-        <Button size="large" className="sidebar-button" onClick={toggleSidebar}>
-          Controls
-          <span style={{ marginLeft: "3px", marginTop: "3px" }}>
-            <ArrowDropDownIcon />
-          </span>
-        </Button>
+      <div>
         <InnerHeaderContainer>
-          <HeaderDiv className={show ? "show" : ""}>
+          <HeaderDiv>
             <div className="left">
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <Select
-                  className="select"
-                  value={dayChange}
-                  onChange={handleDayChange}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem disabled value="">
-                    {" "}
-                    Week{" "}
-                  </MenuItem>
-                  <MenuItem value={"Day"}>DAY</MenuItem>
-                  <MenuItem value={"Week"}>WEEK</MenuItem>
-                  <MenuItem value={"Month"}>MONTH</MenuItem>
-                  <MenuItem value={"Agenda"}>SCHEDULE</MenuItem>
-                </Select>
-              </FormControl>
+            <Controls>
+                <button className="p-2 hover:bg-gray-100 rounded-full" size="small" onClick={goToBack}>
+                  <ChevronLeft className="h-5 w-5 text-gray-600" />
+                </button>
 
-              <Controls>
-                <Button className="control-btn" size="small" onClick={goToBack}>
-                  <ArrowBackIosIcon style={{ color: "gray", width: "20px" }} />
-                </Button>
-                <label className={{}}>{label()}</label>
-                <Button className="control-btn" size="small" onClick={goToNext}>
-                  <ArrowForwardIosIcon
-                    style={{ color: "gray", width: "30px" }}
-                  />
-                </Button>
+                <button className="p-2 hover:bg-gray-100 rounded-full" size="small" onClick={goToNext}>
+                  <ChevronRight className="h-5 w-5 text-gray-600" />
+                </button>
               </Controls>
 
-              <Button
-                className="btn btn-today"
+              <button
+                className="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 mr-3"
                 size="large"
                 onClick={goToCurrent}
               >
                 Today
-              </Button>
+              </button>
+
+              <div className="relative">
+                <button 
+                  onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
+                  className="flex items-center space-x-1 text-lg font-semibold"
+                >
+                  <span>{dayChange || 'Month'}</span>
+                  <ChevronDown className="h-5 w-5 text-gray-600" />
+                </button>
+                {isMonthDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                    {views?.map(view => (
+                      <button
+                        key={view}
+                        onClick={() => handleDayChange(view)}
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                      >
+                        {view}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
             </div>
             <div className="right">
-              <Button className="btn shift-btn" size="large" onClick={addShift}>
-                <div>
-                  <img src={AddeIcon} />
-                </div>
-                <div>Add Event</div>
-              </Button>
+              <button
+                className="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 mr-3"
+                size="sm"
+                onClick={addShift}
+                title='Event'
+              >
+                <Plus className="h-5 w-5 text-gray-600" />
+              </button>
             </div>
           </HeaderDiv>
-          {show && <Overlay onClick={toggleSidebar} />}
         </InnerHeaderContainer>
-      </HeaderContainer>
+      </div>
     );
   };
 

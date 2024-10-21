@@ -49,21 +49,21 @@ const HeaderNav = () => {
                 </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
-                <DropdownMenu.Content className="w-56 rounded-md border bg-white p-1 shadow-md" align="end">
+                <DropdownMenu.Content className="w-56 rounded-md border z-50 bg-white p-1 shadow-md" align="end">
                   <DropdownMenu.Label className="px-2 py-1.5 text-sm font-semibold text-gray-900">
                     My Account
                   </DropdownMenu.Label>
                   <DropdownMenu.Separator className="my-1 h-px bg-gray-200" />
-                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900">
+                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
                     <User className="mr-2 h-4 w-4" />
                     <Link onClick={(e) => e.preventDefault()} to="/profile">Profile</Link>
                   </DropdownMenu.Item>
-                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900">
+                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
                     <Settings className="mr-2 h-4 w-4" />
                     <Link onClick={(e) => e.preventDefault()} to="/settings">Settings</Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Separator className="my-1 h-px bg-gray-200" />
-                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900">
+                  <DropdownMenu.Item className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 z-5">
                     <LogOut className="mr-2 h-4 w-4" />
                     <button onClick={logout}>
                       Logout

@@ -5,7 +5,6 @@ import Calendar from "../Components/calendar/calendar";
 import { events as eventData } from "../EventData";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import EventModal from "../Components/EventModal";
-import { EmptySpace } from "../Components/header/header.style";
 import { useGlobalState, setGlobalState } from "../context/GlobalState";
 import {
   Event,
@@ -33,8 +32,8 @@ const Dashboard = () => {
 
   console.log("path::-", window.location.href);
 
-  const [selectedStartDate, setSelectedStartDate] = useState();
-  const [selectedEndDate, setSelectedEndDate] = useState();
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [isVerifiying, setIsVerified] = useState(false);
 
   const [showEventModal] = useGlobalState("showEventModal");
@@ -54,9 +53,12 @@ const Dashboard = () => {
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
   }, [savedEvents]);
+
   useEffect(() => {
     if (!showEventModal) {
-      setGlobalState("selectedEvent", "")
+      setGlobalState("selectedEvent", "");
+      setSelectedStartDate(null);
+      setSelectedEndDate(null)
     }
   }, [showEventModal]);
 
@@ -79,14 +81,16 @@ const Dashboard = () => {
   const onView = (newView) => setView(newView);
 
   const onSelectSlot = ({ start, end, action }) => {
-    console.log("PopUp EVents Trigger");
+    console.table([start, end])
     setSelectedStartDate(start);
     setSelectedEndDate(end)
     setGlobalState("showEventModal", true);
   };
 
-  const onSelectEvent = (event) => {
 
+  console.log("startt::", selectedStartDate);
+
+  const onSelectEvent = (event) => {
     setGlobalState("selectedEvent", event);
     setGlobalState("showEventModal", true);
   };

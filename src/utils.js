@@ -74,7 +74,6 @@ export const Event = ({ event }) => {
       <span style={{ fontWeight: "bold", marginRight: "20px" }}>
         {event.title}
       </span>
-      <span style={{ fontWeight: "lighter" }}>{event.staff.label}</span>
     </EventContainer>
   );
 };

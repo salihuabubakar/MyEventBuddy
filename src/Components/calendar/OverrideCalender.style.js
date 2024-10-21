@@ -62,4 +62,19 @@ export const Container = styled.body`
     font-size: 1rem;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
+
+  .rbc-month-header {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #fff!important;
+  }
+
+  /* .rbc-header {
+    border-bottom: 1px solid #fff!important;
+  } */
+
+  .rbc-month-view {
+    border: 1px solid #fff!important;
+  }
 `;

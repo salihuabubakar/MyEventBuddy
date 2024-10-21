@@ -9,18 +9,13 @@ import {
   PopupWrapper,
   PopCardContentWrapper,
   TextWrapper,
-  SelectWrapper,
   DateWrapper,
   ColorWrapper,
   CheckToCompleteWrapper,
   PopupOverlay,
 } from "./EventModal.style";
 
-import Select from 'react-select';
 import CancleIcon from "../../img/cancel.png";
-import TrashIcon from "../../img/trash.png";
-import AddeIcon from "../../img/add.png";
-import UpdateIcon from "../../img/update.png"
 
 import {setGlobalState, useGlobalState} from "../../context/GlobalState";
 
@@ -42,19 +37,9 @@ const EventModal = ({
   selectedEndDate,
 }) => {
 
-
-  const options = [
-    { value: 1, label: "Abdul" },
-    { value: 2, label: "Musa" },
-    { value: 3, label: "Isah" },
-  ];
-
   const [selectedEvent] = useGlobalState("selectedEvent");
-  const [show, setShow] = useState(false);
 
-  const toggleSidebar = async () => {
-    setShow(!show);
-  };
+  console.log("start::", selectedStartDate, "end::", selectedEndDate)
 
   const [startTime, setStartTime] = useState(
     selectedEvent.start ? selectedEvent.start : dayjs()
@@ -70,10 +55,6 @@ const EventModal = ({
 
   const [description, setDescription] = useState(
     selectedEvent.description ? selectedEvent.description : ""
-  );
-
-  const [staff, setStaff] = useState(
-    selectedEvent.staff ? selectedEvent.staff : ""
   );
 
   const [checkToComplete, setCheckToComplete] = useState(
@@ -93,7 +74,6 @@ const EventModal = ({
     const calendarEvent = {
       title,
       description,
-      staff,
       start: startTime,
       end: endTime,
       checkToComplete,
@@ -126,10 +106,6 @@ const EventModal = ({
 
   const handleEndTimeChange = (event) => {
     setEndTime(event);
-  };
-
-  const handleStaffChange = (event) => {
-    setStaff(event);
   };
 
   const handleCheckChange = (event) => {
@@ -177,22 +153,6 @@ const EventModal = ({
               variant="filled"
             />
           </TextWrapper>
-
-          <SelectWrapper>
-            <Select
-              onChange={handleStaffChange}
-              defaultValue={
-                selectedEvent.staff
-                  ? {
-                      value: staff?.value,
-                      label: staff?.label,
-                    }
-                  : "Select Staff"
-              }
-              placeholder="Select Staff"
-              options={options}
-            />
-          </SelectWrapper>
 
           <DateWrapper>
             <LocalizationProvider dateAdapter={AdapterDayjs}>

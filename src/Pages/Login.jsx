@@ -40,11 +40,11 @@ export default function Login() {
     navigate(from, { replace: true });
   }, [location.state?.from?.pathname, navigate])
 
-  useEffect(() => {
-    if(currentUser) {
-      navigateFrom()
-    }
-  }, [currentUser, navigateFrom]);
+  // useEffect(() => {
+  //   if(currentUser) {
+  //     navigateFrom()
+  //   }
+  // }, [currentUser, navigateFrom]);
 
   const handleSignUp = async (e) => {
     e.preventDefault()
